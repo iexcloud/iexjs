@@ -7,14 +7,14 @@
  *
  */
 import {
-  _get,
+  _platformGet,
   _dateRange,
   _quoteSymbols,
   _strOrDate,
-  _patch,
-  _put,
-  _post,
-  _delete,
+  _platformPatch,
+  _platformPut,
+  _platformPost,
+  _platformDelete,
   IEXJSException,
 } from "../common";
 import { Client } from "../client";
@@ -40,6 +40,7 @@ const _queryUrl = (options) => {
     interval = 0,
     transforms = null,
     basePath = "query",
+    maximumValidationErrors = null,
   } = options || {};
 
   let base_url = basePath;
@@ -75,6 +76,8 @@ const _queryUrl = (options) => {
     if (interval) base_url += `interval=${interval}&`;
     if (transforms)
       base_url += `transforms=${JSON.stringify(transforms || [])}&`;
+    if (maximumValidationErrors)
+      base_url += `maximumValidationErrors=${maximumValidationErrors}&`;
   }
   return base_url;
 };
@@ -114,7 +117,7 @@ Client.platform.prototype.queryMeta = function (options, standardOptions) {
 };
 
 export const query = (options, standardOptions = {}) =>
-  _get({
+  _platformGet({
     url: _queryUrl(options),
     ...standardOptions,
   });
@@ -157,7 +160,7 @@ export const createDataset = ({ provider, schema }, standardOptions) => {
   if (!schema) throw new IEXJSException("Must provide `schema`");
   const url = _queryUrl({ provider, limit: null, basePath: "datasets" });
 
-  return _post({
+  return _platformPost({
     url,
     data: schema,
     token_in_params: true,
@@ -173,13 +176,14 @@ Client.platform.prototype.createDataset = function (options, standardOptions) {
   });
 };
 
+// currently using post to add data
 export const loadData = ({ provider, id, data }, standardOptions) => {
   if (!provider) throw new IEXJSException("Must provide `provider`");
   if (!id) throw new IEXJSException("Must provide `id`");
   if (!data) throw new IEXJSException("Must provide `data`");
   const url = _queryUrl({ provider, id, limit: null, basePath: "datasets" });
 
-  return _put({
+  return _platformPost({
     url,
     data,
     token_in_params: true,
@@ -195,12 +199,13 @@ Client.platform.prototype.loadData = function (options, standardOptions) {
   });
 };
 
+// TODO: data body update
 export const modifyDataset = ({ provider, schema }, standardOptions) => {
   if (!provider) throw new IEXJSException("Must provide `provider`");
   if (!schema) throw new IEXJSException("Must provide `schema`");
   const url = _queryUrl({ provider, limit: null, basePath: "datasets" });
 
-  return _patch({
+  return _platformPatch({
     url,
     data: schema,
     token_in_params: true,
@@ -219,7 +224,7 @@ Client.platform.prototype.modifyDataset = function (options, standardOptions) {
 export const modifyData = (options, standardOptions = {}) => {
   const { transforms } = options;
 
-  return _patch({
+  return _platformPatch({
     url: _queryUrl(options),
     data: transforms,
     token_in_params: true,
@@ -236,7 +241,7 @@ Client.platform.prototype.modifyData = function (options, standardOptions) {
 };
 
 export const deleteData = (options, standardOptions = {}) =>
-  _delete({
+  _platformDelete({
     url: _queryUrl(options),
     ...standardOptions,
   });
@@ -252,7 +257,7 @@ Client.platform.prototype.deleteData = function (options, standardOptions) {
 export const deleteDataset = ({ provider, id }, standardOptions) => {
   if (!provider) throw new IEXJSException("Must provide `provider`");
   if (!id) throw new IEXJSException("Must provide `id`");
-  return _delete({
+  return _platformDelete({
     url: _queryUrl({ provider, id, limit: null, basePath: "datasets" }),
     ...standardOptions,
   });
@@ -265,3 +270,23 @@ Client.platform.prototype.deleteDataset = function (options, standardOptions) {
     ...standardOptions,
   });
 };
+
+export const createDataJob = ({ provider, type, body = {} }, standardOptions) => {
+  if (!provider) throw new IEXJSException("Must provide `provider`");
+  if (!type) throw new IEXJSException("Must specify data job type");
+  const url = `jobs/${provider}/${type}`;
+  return _platformPost({
+    url,
+    data: body,
+    token_in_params: true,
+    ...standardOptions,
+  });
+};
+
+Client.platform.prototype.createDataJob = function (options, standardOptions) {
+  return createDataJob(options, {
+    token: this._token,
+    version: this.version,
+    ...standardOptions,
+  });
+}
