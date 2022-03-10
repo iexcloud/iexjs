@@ -13,7 +13,7 @@
 import { IEXJSException } from "./exception";
 
 export let _URL_PREFIX_CLOUD = (version) =>
-  `https://cloud.iexapis.com/${version}/`;
+`https://cloud.iexapis.com/${version}/`;
 
 
 /**
@@ -84,7 +84,7 @@ const _pppIEXCloudPlatformBase = async (options) => {
     base_url,
     method,
     url,
-    data = {},
+    data,
     token = "",
     version = "V1",
     token_in_params = true,
@@ -100,7 +100,7 @@ const _pppIEXCloudPlatformBase = async (options) => {
   
   return fetch(endpoint, {
     method,
-    body: token_in_params ? { data } : {},
+    body: data,
     headers: {
       "Content-Type": contentType,
     },
