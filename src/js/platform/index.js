@@ -16,15 +16,17 @@ import {
   _platformPost,
   _platformDelete,
   IEXJSException,
+  _get,
 } from "../common";
 import { Client } from "../client";
 
-const _queryUrl = (options) => {
+export const _queryUrl = (options) => {
   const {
     provider = "CORE",
     id = "",
     key = "",
     subkey = "",
+    date = "",
     range = "",
     calendar = false,
     limit = 1,
@@ -50,6 +52,7 @@ const _queryUrl = (options) => {
   if (provider && id) base_url += `/${_quoteSymbols(id)}`;
   if (provider && id && key) base_url += `/${_quoteSymbols(key)}`;
   if (provider && id && key && subkey) base_url += `/${_quoteSymbols(subkey)}`;
+  if (provider && id && key && subkey && date) base_url += `/${_quoteSymbols(date)}`;
 
   base_url += "?";
 
@@ -130,163 +133,4 @@ Client.platform.prototype.query = function (options, standardOptions) {
   });
 };
 
-export const listJobs = ({ provider, type = "ingest" }, standardOptions) => {
-  if (!provider) throw new IEXJSException("Must provide `provider`");
-  const url = `jobs/${provider}/${type}`;
-  return _get({ url, ...standardOptions });
-};
-
-Client.platform.prototype.listJobs = function (options, standardOptions) {
-  return listJobs(options, {
-    token: this._token,
-    version: this._version,
-    ...standardOptions,
-  });
-};
-
-export const listDatasets = ({ provider = "CORE", id = "" }, standardOptions) =>
-  _get({ url: _queryUrl({ provider, id }), ...standardOptions });
-
-Client.platform.prototype.listDatasets = function (options, standardOptions) {
-  return listDatasets(options, {
-    token: this._token,
-    version: this._version,
-    ...standardOptions,
-  });
-};
-
-export const createDataset = ({ provider, schema }, standardOptions) => {
-  if (!provider) throw new IEXJSException("Must provide `provider`");
-  if (!schema) throw new IEXJSException("Must provide `schema`");
-  const url = _queryUrl({ provider, limit: null, basePath: "datasets" });
-
-  return _platformPost({
-    url,
-    data: schema,
-    token_in_params: true,
-    ...standardOptions,
-  });
-};
-
-Client.platform.prototype.createDataset = function (options, standardOptions) {
-  return createDataset(options, {
-    token: this._token,
-    version: this._version,
-    ...standardOptions,
-  });
-};
-
-// currently using post to add data
-export const loadData = ({ provider, id, data }, standardOptions) => {
-  if (!provider) throw new IEXJSException("Must provide `provider`");
-  if (!id) throw new IEXJSException("Must provide `id`");
-  if (!data) throw new IEXJSException("Must provide `data`");
-  const url = _queryUrl({ provider, id, limit: null, basePath: "datasets" });
-
-  return _platformPost({
-    url,
-    data,
-    token_in_params: true,
-    ...standardOptions,
-  });
-};
-
-Client.platform.prototype.loadData = function (options, standardOptions) {
-  return loadData(options, {
-    token: this._token,
-    version: this._version,
-    ...standardOptions,
-  });
-};
-
-// TODO: data body update
-export const modifyDataset = ({ provider, schema }, standardOptions) => {
-  if (!provider) throw new IEXJSException("Must provide `provider`");
-  if (!schema) throw new IEXJSException("Must provide `schema`");
-  const url = _queryUrl({ provider, limit: null, basePath: "datasets" });
-
-  return _platformPatch({
-    url,
-    data: schema,
-    token_in_params: true,
-    ...standardOptions,
-  });
-};
-
-Client.platform.prototype.modifyDataset = function (options, standardOptions) {
-  return modifyDataset(options, {
-    token: this._token,
-    version: this._version,
-    ...standardOptions,
-  });
-};
-
-export const modifyData = (options, standardOptions = {}) => {
-  const { transforms } = options;
-
-  return _platformPatch({
-    url: _queryUrl(options),
-    data: transforms,
-    token_in_params: true,
-    ...standardOptions,
-  });
-};
-
-Client.platform.prototype.modifyData = function (options, standardOptions) {
-  return modifyData(options, {
-    token: this._token,
-    version: this._version,
-    ...standardOptions,
-  });
-};
-
-export const deleteData = (options, standardOptions = {}) =>
-  _platformDelete({
-    url: _queryUrl(options),
-    ...standardOptions,
-  });
-
-Client.platform.prototype.deleteData = function (options, standardOptions) {
-  return deleteData(options, {
-    token: this._token,
-    version: this._version,
-    ...standardOptions,
-  });
-};
-
-export const deleteDataset = ({ provider, id }, standardOptions) => {
-  if (!provider) throw new IEXJSException("Must provide `provider`");
-  if (!id) throw new IEXJSException("Must provide `id`");
-  return _platformDelete({
-    url: _queryUrl({ provider, id, limit: null, basePath: "datasets" }),
-    ...standardOptions,
-  });
-};
-
-Client.platform.prototype.deleteDataset = function (options, standardOptions) {
-  return deleteDataset(options, {
-    token: this._token,
-    version: this._version,
-    ...standardOptions,
-  });
-};
-
-export const createDataJob = ({ provider, type, body = {} }, standardOptions) => {
-  if (!provider) throw new IEXJSException("Must provide `provider`");
-  if (!type) throw new IEXJSException("Must specify data job type");
-  const url = `jobs/${provider}/${type}`;
-  return _platformPost({
-    url,
-    data: body,
-    token_in_params: true,
-    ...standardOptions,
-  });
-};
-
-Client.platform.prototype.createDataJob = function (options, standardOptions) {
-  return createDataJob(options, {
-    token: this._token,
-    version: this.version,
-    ...standardOptions,
-  });
-}
+export * from "./crud_external";
