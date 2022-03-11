@@ -15,7 +15,7 @@ import { IEXJSException } from "./exception";
 export let _URL_PREFIX_CLOUD = (version) =>
 `https://cloud.iexapis.com/${version}/`;
 
-
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 /**
  * for IEX Cloud platform
  * @param {object} options
@@ -150,7 +150,7 @@ const _deleteIEXCloudPlatformBase = async (options) => {
     url,
     token = "",
     version = "V1",
-    // format = "json",
+    format = "json",
     contentType,
   } = options;
 
