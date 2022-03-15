@@ -59,7 +59,7 @@ export const _queryUrl = (options) => {
   if (provider && id) {
     if (range) base_url += `range=${_dateRange(range)}&`;
 
-    base_url += `calendar=${calendar.toString()}&`;
+    if (calendar) base_url += `calendar=${calendar.toString()}&`;
 
     if (limit && !last && (!to || !from)) base_url += `limit=${limit}&`;
     if (offset > 0) base_url += `offset=${offset}&`;
@@ -120,7 +120,7 @@ Client.platform.prototype.queryMeta = function (options, standardOptions) {
 };
 
 export const query = (options, standardOptions = {}) =>
-  _platformGet({
+  _get({
     url: _queryUrl(options),
     ...standardOptions,
   });
