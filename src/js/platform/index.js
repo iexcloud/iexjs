@@ -120,7 +120,7 @@ Client.platform.prototype.queryMeta = function (options, standardOptions) {
 };
 
 export const query = (options, standardOptions = {}) =>
-  _get({
+  _platformGet({
     url: _queryUrl(options),
     ...standardOptions,
   });
