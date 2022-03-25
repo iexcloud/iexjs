@@ -145,7 +145,7 @@ const _patchIEXCloudPlatform = (options) =>
  */
 const _deleteIEXCloudPlatformBase = async (options) => {
   const {
-    base_url,
+    base_url = _URL_PREFIX_CLOUD,
     url,
     token = "",
     version = "V1",
