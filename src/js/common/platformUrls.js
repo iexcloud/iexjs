@@ -13,7 +13,6 @@
 import { IEXJSException } from "./exception";
 import { _URL_PREFIX_CLOUD } from "./urls";
 
-
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 /**
  * for IEX Cloud platform
@@ -66,7 +65,7 @@ const _getIEXCloudPlatformBase = async (options) => {
   }
   throw IEXJSException(`Response ${res.status} - ${await res.text()}`);
 };
-  
+
 /**
  *
  * @param {object} options
@@ -84,7 +83,6 @@ const _pppIEXCloudPlatformBase = async (options) => {
     method,
     url,
     data,
-    token = "",
     version = "V1",
     token_in_params = true,
     format = "json",
@@ -93,10 +91,11 @@ const _pppIEXCloudPlatformBase = async (options) => {
 
   const endpoint = new URL(`${base_url(version)}${url}`);
 
-  if (token_in_params) {
-    endpoint.searchParams.append("token", token);
-  }
-  
+  if (Array.isArray(options.queryParams))
+    for (const name of options.queryParams)
+      if (name in options)
+        endpoint.searchParams.append(name, options[name]);
+
   return fetch(endpoint, {
     method,
     body: data,
@@ -113,20 +112,28 @@ const _pppIEXCloudPlatformBase = async (options) => {
     throw IEXJSException(`Response ${res.status} - ${await res.text()}`);
   });
 };
-  
-/**
- *
- * @param {object} options
- */
-const _postIEXCloudPlatform = (options) =>
-  _pppIEXCloudPlatformBase({ base_url: _URL_PREFIX_CLOUD, method: "POST", ...options });
 
 /**
  *
  * @param {object} options
  */
- const _putIEXCloudPlatform = (options) =>
- _pppIEXCloudPlatformBase({ base_url: _URL_PREFIX_CLOUD, method: "PUT", ...options });
+const _postIEXCloudPlatform = (options) =>
+  _pppIEXCloudPlatformBase({
+    base_url: _URL_PREFIX_CLOUD,
+    method: "POST",
+    ...options,
+  });
+
+/**
+ *
+ * @param {object} options
+ */
+const _putIEXCloudPlatform = (options) =>
+  _pppIEXCloudPlatformBase({
+    base_url: _URL_PREFIX_CLOUD,
+    method: "PUT",
+    ...options,
+  });
 
 /**
  *
@@ -176,37 +183,29 @@ const _deleteIEXCloudPlatformBase = async (options) => {
  * for backwards compat, accepting token and version but ignoring
  * @param {object} options
  */
-export const _platformGet = async (options) => {
-  return _getIEXCloudPlatform(options);
-};
+export const _platformGet = async (options) => _getIEXCloudPlatform(options);
 
 /**
  *
  * @param {object} options
  */
-export const _platformPost = async (options) => {
-  return _postIEXCloudPlatform(options);
-};
+export const _platformPost = async (options) => _postIEXCloudPlatform(options);
 
 /**
  *
  * @param {object} options
  */
-export const _platformPut = async (options) => {
-  return _putIEXCloudPlatform(options);
-};
+export const _platformPut = async (options) => _putIEXCloudPlatform(options);
 
 /**
  *
  * @param {object} options
  */
-export const _platformPatch = async (options) => {
-  return _patchIEXCloudPlatform(options);
-};
+export const _platformPatch = async (options) =>
+  _patchIEXCloudPlatform(options);
 /**
  *
  * @param {object} options
  */
-export const _platformDelete = (options) => {
-  return _deleteIEXCloudPlatformBase(options);
-};
+export const _platformDelete = (options) =>
+  _deleteIEXCloudPlatformBase(options);
