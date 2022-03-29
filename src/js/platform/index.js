@@ -139,4 +139,26 @@ Client.platform.prototype.query = function (options, standardOptions) {
   });
 };
 
+export const sqlQuery = (args, standardOptions = {}) => {
+  const { provider = "" } = args;
+  const qpNames = ['token', 'sqlQuery'];
+  const url = `sql-query/${provider}`;
+  return _platformGet({
+    url,
+    queryParams: qpNames,
+    ...Object.fromEntries(
+      qpNames.filter((el) => el in args).map((el) => [el, args[el]])
+    ),
+    ...standardOptions,
+  });
+};
+
+Client.platform.prototype.sqlQuery = function (options, standardOptions) {
+  return sqlQuery(options, {
+    token: this._token,
+    version: this._version,
+    ...standardOptions,
+  });
+};
+
 export * from "./crud_external";
