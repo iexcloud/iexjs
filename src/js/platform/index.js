@@ -119,11 +119,17 @@ Client.platform.prototype.queryMeta = function (options, standardOptions) {
   });
 };
 
-export const query = (options, standardOptions = {}) =>
-  _platformGet({
-    url: _queryUrl(options),
+export const query = (args, standardOptions = {}) => {
+  const qpNames = ['token'];
+  return _platformGet({
+    url: _queryUrl(args),
+    queryParams: qpNames,
+    ...Object.fromEntries(
+      qpNames.filter((el) => el in args).map((el) => [el, args[el]])
+    ),
     ...standardOptions,
   });
+};
 
 Client.platform.prototype.query = function (options, standardOptions) {
   return query(options, {
