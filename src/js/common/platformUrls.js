@@ -13,65 +13,16 @@
 import { IEXJSException } from "./exception";
 import { _URL_PREFIX_CLOUD } from "./urls";
 
-const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-/**
- * for IEX Cloud platform
- * @param {object} options
- */
-const _getIEXCloudPlatformBase = async (options) => {
-  const {
-    base_url,
-    url,
-    token = "",
-    version = "V1",
-    filter = "",
-    format = "json",
-  } = options;
-  let contentType;
-  const endpoint = new URL(`${base_url(version)}${url}`);
-  endpoint.searchParams.append("token", token);
-
-  if (filter) endpoint.searchParams.append("filter", filter);
-
-  let tries = 0;
-  let res = { status: 429, text: () => "Error 429 - Too Many Requests" };
-
-  while (res.status === 429 && tries++ < 5) {
-    res = await fetch(endpoint.href, {
-      method: "GET",
-      headers: {
-        "Content-Type": contentType,
-      },
-    });
-
-    // break out
-    if (res.ok) {
-      break;
-    }
-
-    // exponential backoff
-    await sleep(Math.random() * 50 * tries);
-  }
-
-  if (res.ok) {
-    if (format === "json") {
-      return res.json();
-    }
-    if (format === "schema") {
-      const ret = res.json();
-      return Array.isArray(ret) ? ret[0] : ret;
-    }
-    return res.text();
-  }
-  throw IEXJSException(`Response ${res.status} - ${await res.text()}`);
-};
-
 /**
  *
  * @param {object} options
  */
 const _getIEXCloudPlatform = (options) =>
-  _getIEXCloudPlatformBase({ base_url: _URL_PREFIX_CLOUD, ...options });
+  _pppIEXCloudPlatformBase({
+    base_url: _URL_PREFIX_CLOUD,
+    method: "GET",
+    ...options,
+  });
 
 /**
  *
@@ -84,7 +35,6 @@ const _pppIEXCloudPlatformBase = async (options) => {
     url,
     data,
     version = "V1",
-    token_in_params = true,
     format = "json",
     contentType,
   } = options;

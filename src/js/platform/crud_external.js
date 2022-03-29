@@ -59,7 +59,7 @@ export const listDataJobs = (args, standardOptions) => {
   if (!provider) throw new IEXJSException("Must provide 'provider'");
   if (!type) throw new IEXJSException("Must provide 'type'");
   const url = `jobs/${provider}/${type}`;
-  return _get({
+  return _platformGet({
     url,
     queryParams: qpNames,
     ...Object.fromEntries(
@@ -83,7 +83,7 @@ export const queryDataJobs = (args, standardOptions) => {
   if (!provider) throw new IEXJSException("Must provide 'provider'");
   if (!type) throw new IEXJSException("Must provide 'type'");
   const url = `jobs/${provider}/${type}/query`;
-  return _get({
+  return _platformGet({
     url,
     queryParams: qpNames,
     ...Object.fromEntries(
@@ -108,7 +108,7 @@ export const getDataJob = (args, standardOptions) => {
   if (!type) throw new IEXJSException("Must provide 'type'");
   if (!id) throw new IEXJSException("Must provide 'id'");
   const url = `jobs/${provider}/${type}/${id}`;
-  return _get({
+  return _platformGet({
     url,
     queryParams: qpNames,
     ...Object.fromEntries(
@@ -133,7 +133,7 @@ export const getInvalidRecordsLog = (args, standardOptions) => {
   if (!type) throw new IEXJSException("Must provide 'type'");
   if (!id) throw new IEXJSException("Must provide 'id'");
   const url = `jobs/${provider}/${type}/${id}/invalid-records-log`;
-  return _get({
+  return _platformGet({
     url,
     queryParams: qpNames,
     ...Object.fromEntries(
@@ -159,7 +159,7 @@ export const configureS3ingegration = (args, standardOptions) => {
   const qpNames = ["token", "arnrole"];
   if (!provider) throw new IEXJSException("Must provide 'provider'");
   const url = `aws-onboarding/${provider}/configure-aws-s3`;
-  return _get({
+  return _platformGet({
     url,
     queryParams: qpNames,
     ...Object.fromEntries(
@@ -183,7 +183,7 @@ Client.platform.prototype.configureS3ingegration = function (
 export const getSwagger = (args, standardOptions) => {
   const {} = args;
   const url = `platform/swagger-json`;
-  return _get({ url, ...standardOptions });
+  return _platformGet({ url, ...standardOptions });
 };
 
 Client.platform.prototype.getSwagger = function (options, standardOptions) {
@@ -199,7 +199,7 @@ export const listDatasets = (args, standardOptions) => {
   const qpNames = ["token", "limit"];
   if (!provider) throw new IEXJSException("Must provide 'provider'");
   const url = `datasets/${provider}`;
-  return _get({
+  return _platformGet({
     url,
     queryParams: qpNames,
     ...Object.fromEntries(
@@ -223,7 +223,7 @@ export const getDataset = (args, standardOptions) => {
   if (!provider) throw new IEXJSException("Must provide 'provider'");
   if (!id) throw new IEXJSException("Must provide 'id'");
   const url = `datasets/${provider}/${id}`;
-  return _get({
+  return _platformGet({
     url,
     queryParams: qpNames,
     ...Object.fromEntries(
@@ -421,7 +421,7 @@ export const sampleDataSource = (args, standardOptions) => {
   if (!provider) throw new IEXJSException("Must provide 'provider'");
   if (!objectId) throw new IEXJSException("Must provide 'objectId'");
   const url = `sample-data-source/${provider}/${objectId}`;
-  return _get({
+  return _platformGet({
     url,
     queryParams: qpNames,
     ...Object.fromEntries(
@@ -497,7 +497,7 @@ export const getDataSource = (args, standardOptions) => {
   ];
   if (!provider) throw new IEXJSException("Must provide 'provider'");
   const url = `data-sources/${provider}/${objectId}?`;
-  return _get({
+  return _platformGet({
     url,
     queryParams: qpNames,
     ...Object.fromEntries(
@@ -630,7 +630,7 @@ export const getIngestionSchedule = (args, standardOptions) => {
   ];
   if (!provider) throw new IEXJSException("Must provide 'provider'");
   const url = `ingestion-schedules/${provider}/${objectId}?`;
-  return _get({
+  return _platformGet({
     url,
     queryParams: qpNames,
     ...Object.fromEntries(
