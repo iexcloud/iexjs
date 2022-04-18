@@ -22,7 +22,7 @@ import { Client } from "../client";
 
 export const _queryUrl = (options) => {
   const {
-    provider = "CORE",
+    workspace = "CORE",
     id = "",
     key = "",
     subkey = "",
@@ -47,16 +47,16 @@ export const _queryUrl = (options) => {
 
   let base_url = basePath;
 
-  if (provider) base_url += `/${provider}`;
+  if (workspace) base_url += `/${workspace}`;
 
-  if (provider && id) base_url += `/${_quoteSymbols(id)}`;
-  if (provider && id && key) base_url += `/${_quoteSymbols(key)}`;
-  if (provider && id && key && subkey) base_url += `/${_quoteSymbols(subkey)}`;
-  if (provider && id && key && subkey && date) base_url += `/${_quoteSymbols(date)}`;
+  if (workspace && id) base_url += `/${_quoteSymbols(id)}`;
+  if (workspace && id && key) base_url += `/${_quoteSymbols(key)}`;
+  if (workspace && id && key && subkey) base_url += `/${_quoteSymbols(subkey)}`;
+  if (workspace && id && key && subkey && date) base_url += `/${_quoteSymbols(date)}`;
 
   base_url += "?";
 
-  if (provider && id) {
+  if (workspace && id) {
     if (range) base_url += `range=${_dateRange(range)}&`;
 
     if (calendar) base_url += `calendar=${calendar.toString()}&`;
@@ -86,11 +86,11 @@ export const _queryUrl = (options) => {
 };
 
 const _queryMetaUrl = (options) => {
-  const { provider = "CORE", key = "", subkey = "" } = options || {};
+  const { workspace = "CORE", key = "", subkey = "" } = options || {};
   let { id = "" } = options || {};
   let url = "meta";
-  if (provider) {
-    url += `/${provider}`;
+  if (workspace) {
+    url += `/${workspace}`;
     if (!id && key) id = "*";
     if (id) {
       url += `/${_quoteSymbols(id)}`;
@@ -140,9 +140,9 @@ Client.platform.prototype.query = function (options, standardOptions) {
 };
 
 export const sqlQuery = (args, standardOptions = {}) => {
-  const { provider = "" } = args;
+  const { workspace = "" } = args;
   const qpNames = ['token', 'sqlQuery'];
-  const url = `sql-query/${provider}`;
+  const url = `sql-query/${workspace}`;
   return _platformGet({
     url,
     queryParams: qpNames,
