@@ -16,9 +16,6 @@ beforeAll(() => {
   global.fetch = fetch;
 });
 
-console.log(process.argv);
-console.log(IEX_TOKEN);
-
 // set timeout to 30s for long calls
 jest.retryTimes(2);
 jest.setTimeout(50000);
@@ -29,26 +26,23 @@ afterEach(async () => {
 
 describe("Dataset schemas", () => {
   test("all schemas", async () => {
-    const client = new Client({ api_token: TOKEN});
+    const client = new Client({ api_token: TOKEN });
     const res = await client.platform.data({});
     expect(res).toBeDefined();
   });
 
   test("workspace schemas", async () => {
-    const client = new Client({ api_token: TOKEN});
-    const res = await client.platform.data({workspace: WORKSPACE_1});
+    const client = new Client({ api_token: TOKEN });
+    const res = await client.platform.data({ workspace: WORKSPACE_1 });
     expect(res).toBeDefined();
   });
 
-  test("workspace schemas", async () => {
-    const client = new Client({ api_token: TOKEN});
-    const res = await client.platform.data({workspace: WORKSPACE_1, id: DATASET_1});
-    expect(res).toBeDefined();
-  });
-
-  test("core schemas", async () => {
-    const client = new Client({ api_token: TOKEN});
-    const res = await client.platform.data({workspace: WORKSPACE_2});
+  test("workspace dataset", async () => {
+    const client = new Client({ api_token: TOKEN });
+    const res = await client.platform.data({
+      workspace: WORKSPACE_1,
+      id: DATASET_1,
+    });
     expect(res).toBeDefined();
   });
 });
