@@ -139,6 +139,26 @@ Client.platform.prototype.query = function (options, standardOptions) {
   });
 };
 
+export const data = (args, standardOptions = {}) => {
+  const qpNames = ['token'];
+  return _platformGet({
+    url: _queryUrl({...args, basePath: "data"}),
+    queryParams: qpNames,
+    ...Object.fromEntries(
+      qpNames.filter((el) => el in args).map((el) => [el, args[el]])
+    ),
+    ...standardOptions,
+  });
+};
+
+Client.platform.prototype.data = function (options, standardOptions) {
+  return data(options, {
+    token: this._token,
+    version: this._version,
+    ...standardOptions,
+  });
+};
+
 export const sqlQuery = (args, standardOptions = {}) => {
   const { workspace = "" } = args;
   const qpNames = ['token', 'sqlQuery'];
