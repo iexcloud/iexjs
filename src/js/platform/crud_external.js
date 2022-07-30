@@ -22,17 +22,18 @@ import { _queryUrl } from "./index";
 import { Client } from "../client";
 
 export const createDataJob = (args, standardOptions) => {
-  const {
-    workspace = "",
-    type = "",
-    data,
-    contentType = "application/json",
-  } = args;
+  const { data, contentType = "application/json" } = args;
   const qpNames = ["token"];
-  if (!workspace) throw new IEXJSException("Must provide 'workspace'");
-  if (!type) throw new IEXJSException("Must provide 'type'");
   if (!data) throw new IEXJSException("Must provide 'data'");
-  const url = `jobs/${workspace}/${type}`;
+  let url = "jobs";
+  for (const { name, required } of [
+    { name: "workspace", required: true },
+    { name: "type", required: true },
+  ]) {
+    if (name in args) url += "/" + args[name];
+    else if (required) throw IEXJSException(`Must provide '${name}'`);
+    else break;
+  }
   return _platformPost({
     url,
     data,
@@ -54,11 +55,16 @@ Client.platform.prototype.createDataJob = function (options, standardOptions) {
 };
 
 export const listDataJobs = (args, standardOptions) => {
-  const { workspace = "", type = "" } = args;
   const qpNames = ["token"];
-  if (!workspace) throw new IEXJSException("Must provide 'workspace'");
-  if (!type) throw new IEXJSException("Must provide 'type'");
-  const url = `jobs/${workspace}/${type}`;
+  let url = "jobs";
+  for (const { name, required } of [
+    { name: "workspace", required: true },
+    { name: "type", required: true },
+  ]) {
+    if (name in args) url += "/" + args[name];
+    else if (required) throw IEXJSException(`Must provide '${name}'`);
+    else break;
+  }
   return _platformGet({
     url,
     queryParams: qpNames,
@@ -78,11 +84,16 @@ Client.platform.prototype.listDataJobs = function (options, standardOptions) {
 };
 
 export const queryDataJobs = (args, standardOptions) => {
-  const { workspace = "", type = "" } = args;
   const qpNames = ["token", "limit", "from", "to", "last", "first", "sort"];
-  if (!workspace) throw new IEXJSException("Must provide 'workspace'");
-  if (!type) throw new IEXJSException("Must provide 'type'");
-  const url = `jobs/${workspace}/${type}/query`;
+  let url = "jobs";
+  for (const { name, required } of [
+    { name: "workspace", required: true },
+    { name: "type", required: true },
+  ]) {
+    if (name in args) url += "/" + args[name];
+    else if (required) throw IEXJSException(`Must provide '${name}'`);
+    else break;
+  }
   return _platformGet({
     url,
     queryParams: qpNames,
@@ -102,12 +113,17 @@ Client.platform.prototype.queryDataJobs = function (options, standardOptions) {
 };
 
 export const getDataJob = (args, standardOptions) => {
-  const { workspace = "", type = "", id = "" } = args;
   const qpNames = ["token"];
-  if (!workspace) throw new IEXJSException("Must provide 'workspace'");
-  if (!type) throw new IEXJSException("Must provide 'type'");
-  if (!id) throw new IEXJSException("Must provide 'id'");
-  const url = `jobs/${workspace}/${type}/${id}`;
+  let url = "jobs";
+  for (const { name, required } of [
+    { name: "workspace", required: true },
+    { name: "type", required: true },
+    { name: "id", required: true },
+  ]) {
+    if (name in args) url += "/" + args[name];
+    else if (required) throw IEXJSException(`Must provide '${name}'`);
+    else break;
+  }
   return _platformGet({
     url,
     queryParams: qpNames,
@@ -127,12 +143,17 @@ Client.platform.prototype.getDataJob = function (options, standardOptions) {
 };
 
 export const getInvalidRecordsLog = (args, standardOptions) => {
-  const { workspace = "", type = "", id = "" } = args;
   const qpNames = ["token"];
-  if (!workspace) throw new IEXJSException("Must provide 'workspace'");
-  if (!type) throw new IEXJSException("Must provide 'type'");
-  if (!id) throw new IEXJSException("Must provide 'id'");
-  const url = `jobs/${workspace}/${type}/${id}/invalid-records-log`;
+  let url = "jobs";
+  for (const { name, required } of [
+    { name: "workspace", required: true },
+    { name: "type", required: true },
+    { name: "id", required: true },
+  ]) {
+    if (name in args) url += "/" + args[name];
+    else if (required) throw IEXJSException(`Must provide '${name}'`);
+    else break;
+  }
   return _platformGet({
     url,
     queryParams: qpNames,
@@ -155,11 +176,16 @@ Client.platform.prototype.getInvalidRecordsLog = function (
 };
 
 export const cancelIngestionJob = (args, standardOptions) => {
-  const { workspace = "", id = "" } = args;
   const qpNames = ["token"];
-  if (!workspace) throw new IEXJSException("Must provide 'workspace'");
-  if (!id) throw new IEXJSException("Must provide 'id'");
-  const url = `jobs/${workspace}/ingest/${id}/cancel`;
+  let url = "jobs";
+  for (const { name, required } of [
+    { name: "workspace", required: true },
+    { name: "id", required: true },
+  ]) {
+    if (name in args) url += "/" + args[name];
+    else if (required) throw IEXJSException(`Must provide '${name}'`);
+    else break;
+  }
   return _platformGet({
     url,
     queryParams: qpNames,
@@ -182,10 +208,13 @@ Client.platform.prototype.cancelIngestionJob = function (
 };
 
 export const configureS3ingegration = (args, standardOptions) => {
-  const { workspace = "" } = args;
   const qpNames = ["token", "arnrole"];
-  if (!workspace) throw new IEXJSException("Must provide 'workspace'");
-  const url = `aws-onboarding/${workspace}/configure-aws-s3`;
+  let url = "aws-onboarding";
+  for (const { name, required } of [{ name: "workspace", required: true }]) {
+    if (name in args) url += "/" + args[name];
+    else if (required) throw IEXJSException(`Must provide '${name}'`);
+    else break;
+  }
   return _platformGet({
     url,
     queryParams: qpNames,
@@ -208,8 +237,7 @@ Client.platform.prototype.configureS3ingegration = function (
 };
 
 export const getSwagger = (args, standardOptions) => {
-  const {} = args;
-  const url = `platform/swagger-json`;
+  let url = "platform/swagger-json";
   return _platformGet({ url, ...standardOptions });
 };
 
@@ -222,10 +250,13 @@ Client.platform.prototype.getSwagger = function (options, standardOptions) {
 };
 
 export const listDatasets = (args, standardOptions) => {
-  const { workspace = "" } = args;
   const qpNames = ["token", "limit"];
-  if (!workspace) throw new IEXJSException("Must provide 'workspace'");
-  const url = `datasets/${workspace}`;
+  let url = "datasets";
+  for (const { name, required } of [{ name: "workspace", required: true }]) {
+    if (name in args) url += "/" + args[name];
+    else if (required) throw IEXJSException(`Must provide '${name}'`);
+    else break;
+  }
   return _platformGet({
     url,
     queryParams: qpNames,
@@ -245,11 +276,16 @@ Client.platform.prototype.listDatasets = function (options, standardOptions) {
 };
 
 export const getDataset = (args, standardOptions) => {
-  const { workspace = "", id = "" } = args;
   const qpNames = ["token"];
-  if (!workspace) throw new IEXJSException("Must provide 'workspace'");
-  if (!id) throw new IEXJSException("Must provide 'id'");
-  const url = `datasets/${workspace}/${id}`;
+  let url = "datasets";
+  for (const { name, required } of [
+    { name: "workspace", required: true },
+    { name: "id", required: true },
+  ]) {
+    if (name in args) url += "/" + args[name];
+    else if (required) throw IEXJSException(`Must provide '${name}'`);
+    else break;
+  }
   return _platformGet({
     url,
     queryParams: qpNames,
@@ -269,11 +305,15 @@ Client.platform.prototype.getDataset = function (options, standardOptions) {
 };
 
 export const registerDataset = (args, standardOptions) => {
-  const { workspace = "", data, contentType = "application/json" } = args;
+  const { data, contentType = "application/json" } = args;
   const qpNames = ["token"];
-  if (!workspace) throw new IEXJSException("Must provide 'workspace'");
   if (!data) throw new IEXJSException("Must provide 'data'");
-  const url = `datasets/${workspace}`;
+  let url = "datasets";
+  for (const { name, required } of [{ name: "workspace", required: true }]) {
+    if (name in args) url += "/" + args[name];
+    else if (required) throw IEXJSException(`Must provide '${name}'`);
+    else break;
+  }
   return _platformPost({
     url,
     data,
@@ -298,17 +338,18 @@ Client.platform.prototype.registerDataset = function (
 };
 
 export const updateDataset = (args, standardOptions) => {
-  const {
-    workspace = "",
-    id = "",
-    data,
-    contentType = "application/json",
-  } = args;
+  const { data, contentType = "application/json" } = args;
   const qpNames = ["token"];
-  if (!workspace) throw new IEXJSException("Must provide 'workspace'");
-  if (!id) throw new IEXJSException("Must provide 'id'");
   if (!data) throw new IEXJSException("Must provide 'data'");
-  const url = `datasets/${workspace}/${id}`;
+  let url = "datasets";
+  for (const { name, required } of [
+    { name: "workspace", required: true },
+    { name: "id", required: true },
+  ]) {
+    if (name in args) url += "/" + args[name];
+    else if (required) throw IEXJSException(`Must provide '${name}'`);
+    else break;
+  }
   return _platformPost({
     url,
     data,
@@ -330,17 +371,18 @@ Client.platform.prototype.updateDataset = function (options, standardOptions) {
 };
 
 export const patchDataset = (args, standardOptions) => {
-  const {
-    workspace = "",
-    id = "",
-    data,
-    contentType = "application/json",
-  } = args;
+  const { data, contentType = "application/json" } = args;
   const qpNames = ["token"];
-  if (!workspace) throw new IEXJSException("Must provide 'workspace'");
-  if (!id) throw new IEXJSException("Must provide 'id'");
   if (!data) throw new IEXJSException("Must provide 'data'");
-  const url = `datasets/${workspace}/${id}`;
+  let url = "datasets";
+  for (const { name, required } of [
+    { name: "workspace", required: true },
+    { name: "id", required: true },
+  ]) {
+    if (name in args) url += "/" + args[name];
+    else if (required) throw IEXJSException(`Must provide '${name}'`);
+    else break;
+  }
   return _platformPatch({
     url,
     data,
@@ -362,11 +404,16 @@ Client.platform.prototype.patchDataset = function (options, standardOptions) {
 };
 
 export const deleteDataset = (args, standardOptions) => {
-  const { workspace = "", id = "" } = args;
   const qpNames = ["token"];
-  if (!workspace) throw new IEXJSException("Must provide 'workspace'");
-  if (!id) throw new IEXJSException("Must provide 'id'");
-  const url = `datasets/${workspace}/${id}`;
+  let url = "datasets";
+  for (const { name, required } of [
+    { name: "workspace", required: true },
+    { name: "id", required: true },
+  ]) {
+    if (name in args) url += "/" + args[name];
+    else if (required) throw IEXJSException(`Must provide '${name}'`);
+    else break;
+  }
   return _platformDelete({
     url,
     queryParams: qpNames,
@@ -386,17 +433,18 @@ Client.platform.prototype.deleteDataset = function (options, standardOptions) {
 };
 
 export const loadData = (args, standardOptions) => {
-  const {
-    workspace = "",
-    id = "",
-    data,
-    contentType = "application/json",
-  } = args;
-  const qpNames = ["token", "overwrite", "maximumValidationErrors"];
-  if (!workspace) throw new IEXJSException("Must provide 'workspace'");
-  if (!id) throw new IEXJSException("Must provide 'id'");
+  const { data, contentType = "application/json" } = args;
+  const qpNames = ["token", "overwrite", "maximumValidationErrors", "wait"];
   if (!data) throw new IEXJSException("Must provide 'data'");
-  const url = `data/${workspace}/${id}`;
+  let url = "data";
+  for (const { name, required } of [
+    { name: "workspace", required: true },
+    { name: "id", required: true },
+  ]) {
+    if (name in args) url += "/" + args[name];
+    else if (required) throw IEXJSException(`Must provide '${name}'`);
+    else break;
+  }
   return _platformPost({
     url,
     data,
@@ -418,12 +466,19 @@ Client.platform.prototype.loadData = function (options, standardOptions) {
 };
 
 export const deleteData = (args, standardOptions) => {
-  const { workspace = "", id = "", key = "", subkey = "", date = "" } = args;
   const qpNames = ["token", "from", "to"];
-  if (!workspace) throw new IEXJSException("Must provide 'workspace'");
-  if (!id) throw new IEXJSException("Must provide 'id'");
-  if (!key) throw new IEXJSException("Must provide 'key'");
-  const url = `data/${workspace}/${id}/${key}/${subkey}?/${date}?`;
+  let url = "data";
+  for (const { name, required } of [
+    { name: "workspace", required: true },
+    { name: "id", required: true },
+    { name: "key", required: true },
+    { name: "subkey", required: false },
+    { name: "date", required: false },
+  ]) {
+    if (name in args) url += "/" + args[name];
+    else if (required) throw IEXJSException(`Must provide '${name}'`);
+    else break;
+  }
   return _platformDelete({
     url,
     queryParams: qpNames,
@@ -442,12 +497,113 @@ Client.platform.prototype.deleteData = function (options, standardOptions) {
   });
 };
 
+export const queryDatasets = (args, standardOptions) => {
+  const qpNames = [
+    "cache",
+    "cacheTTL",
+    "token",
+    "callback",
+    "format",
+    "schema",
+    "filter",
+    "id",
+    "source",
+    "key",
+  ];
+  let url = "data";
+  for (const { name, required } of [{ name: "workspace", required: false }]) {
+    if (name in args) url += "/" + args[name];
+    else if (required) throw IEXJSException(`Must provide '${name}'`);
+    else break;
+  }
+  return _platformGet({
+    url,
+    queryParams: qpNames,
+    ...Object.fromEntries(
+      qpNames.filter((el) => el in args).map((el) => [el, args[el]])
+    ),
+    ...standardOptions,
+  });
+};
+
+Client.platform.prototype.queryDatasets = function (options, standardOptions) {
+  return queryDatasets(options, {
+    token: this._token,
+    version: this._version,
+    ...standardOptions,
+  });
+};
+
+export const queryData = (args, standardOptions) => {
+  const qpNames = [
+    "cache",
+    "cacheTTL",
+    "token",
+    "callback",
+    "format",
+    "schema",
+    "filter",
+    "calendar",
+    "forward",
+    "future",
+    "range",
+    "from",
+    "to",
+    "on",
+    "interval",
+    "last",
+    "next",
+    "first",
+    "limit",
+    "offset",
+    "subattribute",
+    "sort",
+    "updated",
+    "dateField",
+    "transform",
+    "includeInternalRecordProperties",
+    "queryId",
+  ];
+  let url = "data";
+  for (const { name, required } of [
+    { name: "workspace", required: true },
+    { name: "id", required: true },
+    { name: "key", required: false },
+    { name: "subkey", required: false },
+  ]) {
+    if (name in args) url += "/" + args[name];
+    else if (required) throw IEXJSException(`Must provide '${name}'`);
+    else break;
+  }
+  return _platformGet({
+    url,
+    queryParams: qpNames,
+    ...Object.fromEntries(
+      qpNames.filter((el) => el in args).map((el) => [el, args[el]])
+    ),
+    ...standardOptions,
+  });
+};
+
+Client.platform.prototype.queryData = function (options, standardOptions) {
+  return queryData(options, {
+    token: this._token,
+    version: this._version,
+    ...standardOptions,
+  });
+};
+
 export const sampleDataSource = (args, standardOptions) => {
-  const { workspace = "", objectId = "" } = args;
-  const qpNames = ["token"];
-  if (!workspace) throw new IEXJSException("Must provide 'workspace'");
-  if (!objectId) throw new IEXJSException("Must provide 'objectId'");
-  const url = `sample-data-source/${workspace}/${objectId}`;
+  const qpNames = ["token", "credentialId"];
+  let url = "sample-data-source";
+  for (const { name, required } of [
+    { name: "workspace", required: true },
+    { name: "objectId", required: true },
+  ]) {
+    if (name in args) url += "/" + args[name];
+    else if (required) throw IEXJSException(`Must provide '${name}'`);
+    else break;
+  }
   return _platformGet({
     url,
     queryParams: qpNames,
@@ -469,12 +625,271 @@ Client.platform.prototype.sampleDataSource = function (
   });
 };
 
-export const createDataSource = (args, standardOptions) => {
-  const { workspace = "", data, contentType = "application/json" } = args;
+export const queryMeta = (args, standardOptions) => {
+  const qpNames = [
+    "cache",
+    "cacheTTL",
+    "token",
+    "callback",
+    "format",
+    "schema",
+    "filter",
+    "force",
+    "limit",
+    "offset",
+  ];
+  let url = "meta";
+  for (const { name, required } of [
+    { name: "workspace", required: false },
+    { name: "id", required: false },
+    { name: "key", required: false },
+    { name: "subkey", required: false },
+  ]) {
+    if (name in args) url += "/" + args[name];
+    else if (required) throw IEXJSException(`Must provide '${name}'`);
+    else break;
+  }
+  return _platformGet({
+    url,
+    queryParams: qpNames,
+    ...Object.fromEntries(
+      qpNames.filter((el) => el in args).map((el) => [el, args[el]])
+    ),
+    ...standardOptions,
+  });
+};
+
+Client.platform.prototype.queryMeta = function (options, standardOptions) {
+  return queryMeta(options, {
+    token: this._token,
+    version: this._version,
+    ...standardOptions,
+  });
+};
+
+export const sqlQuery = (args, standardOptions) => {
+  const qpNames = ["token", "includeSystemRecordProperties", "sqlQuery"];
+  let url = "sql-query";
+  for (const { name, required } of [{ name: "workspace", required: true }]) {
+    if (name in args) url += "/" + args[name];
+    else if (required) throw IEXJSException(`Must provide '${name}'`);
+    else break;
+  }
+  return _platformGet({
+    url,
+    queryParams: qpNames,
+    ...Object.fromEntries(
+      qpNames.filter((el) => el in args).map((el) => [el, args[el]])
+    ),
+    ...standardOptions,
+  });
+};
+
+Client.platform.prototype.sqlQuery = function (options, standardOptions) {
+  return sqlQuery(options, {
+    token: this._token,
+    version: this._version,
+    ...standardOptions,
+  });
+};
+
+export const fetchLogs = (args, standardOptions) => {
+  const qpNames = ["period", "token"];
+  let url = "logs";
+  for (const { name, required } of [{ name: "workspace", required: true }]) {
+    if (name in args) url += "/" + args[name];
+    else if (required) throw IEXJSException(`Must provide '${name}'`);
+    else break;
+  }
+  return _platformGet({
+    url,
+    queryParams: qpNames,
+    ...Object.fromEntries(
+      qpNames.filter((el) => el in args).map((el) => [el, args[el]])
+    ),
+    ...standardOptions,
+  });
+};
+
+Client.platform.prototype.fetchLogs = function (options, standardOptions) {
+  return fetchLogs(options, {
+    token: this._token,
+    version: this._version,
+    ...standardOptions,
+  });
+};
+
+export const generateSchemaFromDefinedDataSource = (args, standardOptions) => {
+  const qpNames = ["token", "credentialId"];
+  let url = "generate-schema";
+  for (const { name, required } of [
+    { name: "workspace", required: true },
+    { name: "objectId", required: true },
+  ]) {
+    if (name in args) url += "/" + args[name];
+    else if (required) throw IEXJSException(`Must provide '${name}'`);
+    else break;
+  }
+  return _platformGet({
+    url,
+    queryParams: qpNames,
+    ...Object.fromEntries(
+      qpNames.filter((el) => el in args).map((el) => [el, args[el]])
+    ),
+    ...standardOptions,
+  });
+};
+
+Client.platform.prototype.generateSchemaFromDefinedDataSource = function (
+  options,
+  standardOptions
+) {
+  return generateSchemaFromDefinedDataSource(options, {
+    token: this._token,
+    version: this._version,
+    ...standardOptions,
+  });
+};
+
+export const generateSchemaFromRemoteDataSource = (args, standardOptions) => {
+  const { data, contentType = "application/json" } = args;
   const qpNames = ["token"];
-  if (!workspace) throw new IEXJSException("Must provide 'workspace'");
   if (!data) throw new IEXJSException("Must provide 'data'");
-  const url = `data-sources/${workspace}`;
+  let url = "generate-schema";
+  for (const { name, required } of [{ name: "workspace", required: true }]) {
+    if (name in args) url += "/" + args[name];
+    else if (required) throw IEXJSException(`Must provide '${name}'`);
+    else break;
+  }
+  return _platformPost({
+    url,
+    data,
+    contentType,
+    queryParams: qpNames,
+    ...Object.fromEntries(
+      qpNames.filter((el) => el in args).map((el) => [el, args[el]])
+    ),
+    ...standardOptions,
+  });
+};
+
+Client.platform.prototype.generateSchemaFromRemoteDataSource = function (
+  options,
+  standardOptions
+) {
+  return generateSchemaFromRemoteDataSource(options, {
+    token: this._token,
+    version: this._version,
+    ...standardOptions,
+  });
+};
+
+export const createIndex = (args, standardOptions) => {
+  const { data, contentType = "application/json" } = args;
+  const qpNames = ["token"];
+  if (!data) throw new IEXJSException("Must provide 'data'");
+  let url = "index";
+  for (const { name, required } of [
+    { name: "workspace", required: true },
+    { name: "id", required: true },
+    { name: "attribute", required: true },
+  ]) {
+    if (name in args) url += "/" + args[name];
+    else if (required) throw IEXJSException(`Must provide '${name}'`);
+    else break;
+  }
+  return _platformPost({
+    url,
+    data,
+    contentType,
+    queryParams: qpNames,
+    ...Object.fromEntries(
+      qpNames.filter((el) => el in args).map((el) => [el, args[el]])
+    ),
+    ...standardOptions,
+  });
+};
+
+Client.platform.prototype.createIndex = function (options, standardOptions) {
+  return createIndex(options, {
+    token: this._token,
+    version: this._version,
+    ...standardOptions,
+  });
+};
+
+export const listIndexedAttributes = (args, standardOptions) => {
+  const qpNames = ["token"];
+  let url = "index";
+  for (const { name, required } of [
+    { name: "workspace", required: true },
+    { name: "id", required: true },
+  ]) {
+    if (name in args) url += "/" + args[name];
+    else if (required) throw IEXJSException(`Must provide '${name}'`);
+    else break;
+  }
+  return _platformGet({
+    url,
+    queryParams: qpNames,
+    ...Object.fromEntries(
+      qpNames.filter((el) => el in args).map((el) => [el, args[el]])
+    ),
+    ...standardOptions,
+  });
+};
+
+Client.platform.prototype.listIndexedAttributes = function (
+  options,
+  standardOptions
+) {
+  return listIndexedAttributes(options, {
+    token: this._token,
+    version: this._version,
+    ...standardOptions,
+  });
+};
+
+export const deleteIndex = (args, standardOptions) => {
+  const qpNames = ["token"];
+  let url = "index";
+  for (const { name, required } of [
+    { name: "workspace", required: true },
+    { name: "id", required: true },
+    { name: "attribute", required: true },
+  ]) {
+    if (name in args) url += "/" + args[name];
+    else if (required) throw IEXJSException(`Must provide '${name}'`);
+    else break;
+  }
+  return _platformDelete({
+    url,
+    queryParams: qpNames,
+    ...Object.fromEntries(
+      qpNames.filter((el) => el in args).map((el) => [el, args[el]])
+    ),
+    ...standardOptions,
+  });
+};
+
+Client.platform.prototype.deleteIndex = function (options, standardOptions) {
+  return deleteIndex(options, {
+    token: this._token,
+    version: this._version,
+    ...standardOptions,
+  });
+};
+
+export const createDataSource = (args, standardOptions) => {
+  const { data, contentType = "application/json" } = args;
+  const qpNames = ["token"];
+  if (!data) throw new IEXJSException("Must provide 'data'");
+  let url = "data-sources";
+  for (const { name, required } of [{ name: "workspace", required: true }]) {
+    if (name in args) url += "/" + args[name];
+    else if (required) throw IEXJSException(`Must provide '${name}'`);
+    else break;
+  }
   return _platformPost({
     url,
     data,
@@ -499,7 +914,6 @@ Client.platform.prototype.createDataSource = function (
 };
 
 export const getDataSource = (args, standardOptions) => {
-  const { workspace = "", objectId = "" } = args;
   const qpNames = [
     "token",
     "calendar",
@@ -522,8 +936,15 @@ export const getDataSource = (args, standardOptions) => {
     "schema",
     "transform",
   ];
-  if (!workspace) throw new IEXJSException("Must provide 'workspace'");
-  const url = `data-sources/${workspace}/${objectId}?`;
+  let url = "data-sources";
+  for (const { name, required } of [
+    { name: "workspace", required: true },
+    { name: "objectId", required: false },
+  ]) {
+    if (name in args) url += "/" + args[name];
+    else if (required) throw IEXJSException(`Must provide '${name}'`);
+    else break;
+  }
   return _platformGet({
     url,
     queryParams: qpNames,
@@ -543,16 +964,18 @@ Client.platform.prototype.getDataSource = function (options, standardOptions) {
 };
 
 export const updateDataSource = (args, standardOptions) => {
-  const {
-    workspace = "",
-    objectId = "",
-    data,
-    contentType = "application/json",
-  } = args;
+  const { data, contentType = "application/json" } = args;
   const qpNames = ["token"];
-  if (!workspace) throw new IEXJSException("Must provide 'workspace'");
   if (!data) throw new IEXJSException("Must provide 'data'");
-  const url = `data-sources/${workspace}/${objectId}?`;
+  let url = "data-sources";
+  for (const { name, required } of [
+    { name: "workspace", required: true },
+    { name: "objectId", required: false },
+  ]) {
+    if (name in args) url += "/" + args[name];
+    else if (required) throw IEXJSException(`Must provide '${name}'`);
+    else break;
+  }
   return _platformPut({
     url,
     data,
@@ -577,10 +1000,16 @@ Client.platform.prototype.updateDataSource = function (
 };
 
 export const deleteDataSource = (args, standardOptions) => {
-  const { workspace = "", objectId = "" } = args;
   const qpNames = ["token"];
-  if (!workspace) throw new IEXJSException("Must provide 'workspace'");
-  const url = `data-sources/${workspace}/${objectId}?`;
+  let url = "data-sources";
+  for (const { name, required } of [
+    { name: "workspace", required: true },
+    { name: "objectId", required: false },
+  ]) {
+    if (name in args) url += "/" + args[name];
+    else if (required) throw IEXJSException(`Must provide '${name}'`);
+    else break;
+  }
   return _platformDelete({
     url,
     queryParams: qpNames,
@@ -603,11 +1032,15 @@ Client.platform.prototype.deleteDataSource = function (
 };
 
 export const createIngestionSchedule = (args, standardOptions) => {
-  const { workspace = "", data, contentType = "application/json" } = args;
+  const { data, contentType = "application/json" } = args;
   const qpNames = ["token"];
-  if (!workspace) throw new IEXJSException("Must provide 'workspace'");
   if (!data) throw new IEXJSException("Must provide 'data'");
-  const url = `ingestion-schedules/${workspace}`;
+  let url = "ingestion-schedules";
+  for (const { name, required } of [{ name: "workspace", required: true }]) {
+    if (name in args) url += "/" + args[name];
+    else if (required) throw IEXJSException(`Must provide '${name}'`);
+    else break;
+  }
   return _platformPost({
     url,
     data,
@@ -632,7 +1065,6 @@ Client.platform.prototype.createIngestionSchedule = function (
 };
 
 export const getIngestionSchedule = (args, standardOptions) => {
-  const { workspace = "", objectId = "" } = args;
   const qpNames = [
     "token",
     "calendar",
@@ -655,8 +1087,15 @@ export const getIngestionSchedule = (args, standardOptions) => {
     "schema",
     "transform",
   ];
-  if (!workspace) throw new IEXJSException("Must provide 'workspace'");
-  const url = `ingestion-schedules/${workspace}/${objectId}?`;
+  let url = "ingestion-schedules";
+  for (const { name, required } of [
+    { name: "workspace", required: true },
+    { name: "objectId", required: false },
+  ]) {
+    if (name in args) url += "/" + args[name];
+    else if (required) throw IEXJSException(`Must provide '${name}'`);
+    else break;
+  }
   return _platformGet({
     url,
     queryParams: qpNames,
@@ -679,16 +1118,18 @@ Client.platform.prototype.getIngestionSchedule = function (
 };
 
 export const updateIngestionSchedule = (args, standardOptions) => {
-  const {
-    workspace = "",
-    objectId = "",
-    data,
-    contentType = "application/json",
-  } = args;
+  const { data, contentType = "application/json" } = args;
   const qpNames = ["token"];
-  if (!workspace) throw new IEXJSException("Must provide 'workspace'");
   if (!data) throw new IEXJSException("Must provide 'data'");
-  const url = `ingestion-schedules/${workspace}/${objectId}?`;
+  let url = "ingestion-schedules";
+  for (const { name, required } of [
+    { name: "workspace", required: true },
+    { name: "objectId", required: false },
+  ]) {
+    if (name in args) url += "/" + args[name];
+    else if (required) throw IEXJSException(`Must provide '${name}'`);
+    else break;
+  }
   return _platformPut({
     url,
     data,
@@ -713,10 +1154,16 @@ Client.platform.prototype.updateIngestionSchedule = function (
 };
 
 export const deleteIngestionSchedule = (args, standardOptions) => {
-  const { workspace = "", objectId = "" } = args;
   const qpNames = ["token"];
-  if (!workspace) throw new IEXJSException("Must provide 'workspace'");
-  const url = `ingestion-schedules/${workspace}/${objectId}?`;
+  let url = "ingestion-schedules";
+  for (const { name, required } of [
+    { name: "workspace", required: true },
+    { name: "objectId", required: false },
+  ]) {
+    if (name in args) url += "/" + args[name];
+    else if (required) throw IEXJSException(`Must provide '${name}'`);
+    else break;
+  }
   return _platformDelete({
     url,
     queryParams: qpNames,
@@ -739,11 +1186,15 @@ Client.platform.prototype.deleteIngestionSchedule = function (
 };
 
 export const createCredential = (args, standardOptions) => {
-  const { workspace = "", data, contentType = "application/json" } = args;
+  const { data, contentType = "application/json" } = args;
   const qpNames = ["token"];
-  if (!workspace) throw new IEXJSException("Must provide 'workspace'");
   if (!data) throw new IEXJSException("Must provide 'data'");
-  const url = `credentials/${workspace}`;
+  let url = "credentials";
+  for (const { name, required } of [{ name: "workspace", required: true }]) {
+    if (name in args) url += "/" + args[name];
+    else if (required) throw IEXJSException(`Must provide '${name}'`);
+    else break;
+  }
   return _platformPost({
     url,
     data,
@@ -768,7 +1219,6 @@ Client.platform.prototype.createCredential = function (
 };
 
 export const getCredential = (args, standardOptions) => {
-  const { workspace = "", objectId = "" } = args;
   const qpNames = [
     "token",
     "calendar",
@@ -791,8 +1241,15 @@ export const getCredential = (args, standardOptions) => {
     "schema",
     "transform",
   ];
-  if (!workspace) throw new IEXJSException("Must provide 'workspace'");
-  const url = `credentials/${workspace}/${objectId}?`;
+  let url = "credentials";
+  for (const { name, required } of [
+    { name: "workspace", required: true },
+    { name: "objectId", required: false },
+  ]) {
+    if (name in args) url += "/" + args[name];
+    else if (required) throw IEXJSException(`Must provide '${name}'`);
+    else break;
+  }
   return _platformGet({
     url,
     queryParams: qpNames,
@@ -812,16 +1269,18 @@ Client.platform.prototype.getCredential = function (options, standardOptions) {
 };
 
 export const updateCredential = (args, standardOptions) => {
-  const {
-    workspace = "",
-    objectId = "",
-    data,
-    contentType = "application/json",
-  } = args;
+  const { data, contentType = "application/json" } = args;
   const qpNames = ["token"];
-  if (!workspace) throw new IEXJSException("Must provide 'workspace'");
   if (!data) throw new IEXJSException("Must provide 'data'");
-  const url = `credentials/${workspace}/${objectId}?`;
+  let url = "credentials";
+  for (const { name, required } of [
+    { name: "workspace", required: true },
+    { name: "objectId", required: false },
+  ]) {
+    if (name in args) url += "/" + args[name];
+    else if (required) throw IEXJSException(`Must provide '${name}'`);
+    else break;
+  }
   return _platformPut({
     url,
     data,
@@ -846,10 +1305,16 @@ Client.platform.prototype.updateCredential = function (
 };
 
 export const deleteCredential = (args, standardOptions) => {
-  const { workspace = "", objectId = "" } = args;
   const qpNames = ["token"];
-  if (!workspace) throw new IEXJSException("Must provide 'workspace'");
-  const url = `credentials/${workspace}/${objectId}?`;
+  let url = "credentials";
+  for (const { name, required } of [
+    { name: "workspace", required: true },
+    { name: "objectId", required: false },
+  ]) {
+    if (name in args) url += "/" + args[name];
+    else if (required) throw IEXJSException(`Must provide '${name}'`);
+    else break;
+  }
   return _platformDelete({
     url,
     queryParams: qpNames,
@@ -872,11 +1337,15 @@ Client.platform.prototype.deleteCredential = function (
 };
 
 export const createIngestionHistory = (args, standardOptions) => {
-  const { workspace = "", data, contentType = "application/json" } = args;
+  const { data, contentType = "application/json" } = args;
   const qpNames = ["token"];
-  if (!workspace) throw new IEXJSException("Must provide 'workspace'");
   if (!data) throw new IEXJSException("Must provide 'data'");
-  const url = `ingestion-history/${workspace}`;
+  let url = "ingestion-history";
+  for (const { name, required } of [{ name: "workspace", required: true }]) {
+    if (name in args) url += "/" + args[name];
+    else if (required) throw IEXJSException(`Must provide '${name}'`);
+    else break;
+  }
   return _platformPost({
     url,
     data,
@@ -901,7 +1370,6 @@ Client.platform.prototype.createIngestionHistory = function (
 };
 
 export const getIngestionHistory = (args, standardOptions) => {
-  const { workspace = "", objectId = "" } = args;
   const qpNames = [
     "token",
     "calendar",
@@ -924,8 +1392,15 @@ export const getIngestionHistory = (args, standardOptions) => {
     "schema",
     "transform",
   ];
-  if (!workspace) throw new IEXJSException("Must provide 'workspace'");
-  const url = `ingestion-history/${workspace}/${objectId}?`;
+  let url = "ingestion-history";
+  for (const { name, required } of [
+    { name: "workspace", required: true },
+    { name: "objectId", required: false },
+  ]) {
+    if (name in args) url += "/" + args[name];
+    else if (required) throw IEXJSException(`Must provide '${name}'`);
+    else break;
+  }
   return _platformGet({
     url,
     queryParams: qpNames,
@@ -948,16 +1423,18 @@ Client.platform.prototype.getIngestionHistory = function (
 };
 
 export const updateIngestionHistory = (args, standardOptions) => {
-  const {
-    workspace = "",
-    objectId = "",
-    data,
-    contentType = "application/json",
-  } = args;
+  const { data, contentType = "application/json" } = args;
   const qpNames = ["token"];
-  if (!workspace) throw new IEXJSException("Must provide 'workspace'");
   if (!data) throw new IEXJSException("Must provide 'data'");
-  const url = `ingestion-history/${workspace}/${objectId}?`;
+  let url = "ingestion-history";
+  for (const { name, required } of [
+    { name: "workspace", required: true },
+    { name: "objectId", required: false },
+  ]) {
+    if (name in args) url += "/" + args[name];
+    else if (required) throw IEXJSException(`Must provide '${name}'`);
+    else break;
+  }
   return _platformPut({
     url,
     data,
@@ -982,10 +1459,16 @@ Client.platform.prototype.updateIngestionHistory = function (
 };
 
 export const deleteIngestionHistory = (args, standardOptions) => {
-  const { workspace = "", objectId = "" } = args;
   const qpNames = ["token"];
-  if (!workspace) throw new IEXJSException("Must provide 'workspace'");
-  const url = `ingestion-history/${workspace}/${objectId}?`;
+  let url = "ingestion-history";
+  for (const { name, required } of [
+    { name: "workspace", required: true },
+    { name: "objectId", required: false },
+  ]) {
+    if (name in args) url += "/" + args[name];
+    else if (required) throw IEXJSException(`Must provide '${name}'`);
+    else break;
+  }
   return _platformDelete({
     url,
     queryParams: qpNames,
