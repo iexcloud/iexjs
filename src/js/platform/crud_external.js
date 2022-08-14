@@ -403,6 +403,36 @@ Client.platform.prototype.patchDataset = function (options, standardOptions) {
   });
 };
 
+export const renameDataset = (args, standardOptions) => {
+  const qpNames = ["token"];
+  let url = "datasets";
+  for (const { name, required } of [
+    { name: "workspace", required: true },
+    { name: "id", required: true },
+    { name: "newDatasetId", required: true },
+  ]) {
+    if (name in args) url += "/" + args[name];
+    else if (required) throw IEXJSException(`Must provide '${name}'`);
+    else break;
+  }
+  return _platformPut({
+    url,
+    queryParams: qpNames,
+    ...Object.fromEntries(
+      qpNames.filter((el) => el in args).map((el) => [el, args[el]])
+    ),
+    ...standardOptions,
+  });
+};
+
+Client.platform.prototype.renameDataset = function (options, standardOptions) {
+  return renameDataset(options, {
+    token: this._token,
+    version: this._version,
+    ...standardOptions,
+  });
+};
+
 export const deleteDataset = (args, standardOptions) => {
   const qpNames = ["token"];
   let url = "datasets";
@@ -434,7 +464,13 @@ Client.platform.prototype.deleteDataset = function (options, standardOptions) {
 
 export const loadData = (args, standardOptions) => {
   const { data, contentType = "application/json" } = args;
-  const qpNames = ["token", "overwrite", "maximumValidationErrors", "wait"];
+  const qpNames = [
+    "token",
+    "duplicateKeyHandling",
+    "overwrite",
+    "maximumValidationErrors",
+    "wait",
+  ];
   if (!data) throw new IEXJSException("Must provide 'data'");
   let url = "data";
   for (const { name, required } of [
@@ -778,102 +814,6 @@ Client.platform.prototype.generateSchemaFromRemoteDataSource = function (
   standardOptions
 ) {
   return generateSchemaFromRemoteDataSource(options, {
-    token: this._token,
-    version: this._version,
-    ...standardOptions,
-  });
-};
-
-export const createIndex = (args, standardOptions) => {
-  const { data, contentType = "application/json" } = args;
-  const qpNames = ["token"];
-  if (!data) throw new IEXJSException("Must provide 'data'");
-  let url = "index";
-  for (const { name, required } of [
-    { name: "workspace", required: true },
-    { name: "id", required: true },
-    { name: "attribute", required: true },
-  ]) {
-    if (name in args) url += "/" + args[name];
-    else if (required) throw IEXJSException(`Must provide '${name}'`);
-    else break;
-  }
-  return _platformPost({
-    url,
-    data,
-    contentType,
-    queryParams: qpNames,
-    ...Object.fromEntries(
-      qpNames.filter((el) => el in args).map((el) => [el, args[el]])
-    ),
-    ...standardOptions,
-  });
-};
-
-Client.platform.prototype.createIndex = function (options, standardOptions) {
-  return createIndex(options, {
-    token: this._token,
-    version: this._version,
-    ...standardOptions,
-  });
-};
-
-export const listIndexedAttributes = (args, standardOptions) => {
-  const qpNames = ["token"];
-  let url = "index";
-  for (const { name, required } of [
-    { name: "workspace", required: true },
-    { name: "id", required: true },
-  ]) {
-    if (name in args) url += "/" + args[name];
-    else if (required) throw IEXJSException(`Must provide '${name}'`);
-    else break;
-  }
-  return _platformGet({
-    url,
-    queryParams: qpNames,
-    ...Object.fromEntries(
-      qpNames.filter((el) => el in args).map((el) => [el, args[el]])
-    ),
-    ...standardOptions,
-  });
-};
-
-Client.platform.prototype.listIndexedAttributes = function (
-  options,
-  standardOptions
-) {
-  return listIndexedAttributes(options, {
-    token: this._token,
-    version: this._version,
-    ...standardOptions,
-  });
-};
-
-export const deleteIndex = (args, standardOptions) => {
-  const qpNames = ["token"];
-  let url = "index";
-  for (const { name, required } of [
-    { name: "workspace", required: true },
-    { name: "id", required: true },
-    { name: "attribute", required: true },
-  ]) {
-    if (name in args) url += "/" + args[name];
-    else if (required) throw IEXJSException(`Must provide '${name}'`);
-    else break;
-  }
-  return _platformDelete({
-    url,
-    queryParams: qpNames,
-    ...Object.fromEntries(
-      qpNames.filter((el) => el in args).map((el) => [el, args[el]])
-    ),
-    ...standardOptions,
-  });
-};
-
-Client.platform.prototype.deleteIndex = function (options, standardOptions) {
-  return deleteIndex(options, {
     token: this._token,
     version: this._version,
     ...standardOptions,
