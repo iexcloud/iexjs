@@ -42,9 +42,9 @@ client.chart({symbol: "AAPL", range: "1m"}).then((res) => {
 The client will automatically pick up the API key from the environment variable `IEX_TOKEN`, or it can be passed as an argument. To use the IEX Cloud test environment, simple set `version: 'sandbox'`.
 
 ### Full API
-`iexjs` provides wrappers around both static and SSE streaming data. Implemented methods are provided in [CATALOG.md](CATALOG.md).
+`iexjs` provides wrappers around both static and SSE streaming data. Implemented methods are provided in [CATALOG.md](https://github.com/iexcloud/iexjs/blob/main/CATALOG.md).
 
 ## License
 
 This software is licensed under the Apache 2.0 license. See the
-[LICENSE](LICENSE) and [AUTHORS](AUTHORS) files for details.
+[LICENSE](https://github.com/iexcloud/iexjs/blob/main/LICENSE) and [AUTHORS](https://github.com/iexcloud/iexjs/blob/main/AUTHORS) files for details.
