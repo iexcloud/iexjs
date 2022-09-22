@@ -1,6 +1,6 @@
 {
   "name": "@apperate/iexjs",
-  "version": "0.5.2",
+  "version": "0.6.0",
   "description": "JS interface to IEX and IEX Cloud APIs",
   "repository": {
     "type": "git",
