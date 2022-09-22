@@ -27,19 +27,19 @@ afterEach(async () => {
 describe("Dataset schemas", () => {
   test("all schemas", async () => {
     const client = new Client({ api_token: TOKEN });
-    const res = await client.platform.queryData({});
+    const res = await client.apperate.queryData({});
     expect(res).toBeDefined();
   });
 
   test("workspace schemas", async () => {
     const client = new Client({ api_token: TOKEN });
-    const res = await client.platform.queryData({ workspace: WORKSPACE_1 });
+    const res = await client.apperate.queryData({ workspace: WORKSPACE_1 });
     expect(res).toBeDefined();
   });
 
   test("workspace dataset", async () => {
     const client = new Client({ api_token: TOKEN });
-    const res = await client.platform.queryData({
+    const res = await client.apperate.queryData({
       workspace: WORKSPACE_1,
       id: DATASET_1,
     });

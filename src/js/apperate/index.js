@@ -7,14 +7,14 @@
  *
  */
 import {
-  _platformGet,
+  _apperateGet,
   _dateRange,
   _quoteSymbols,
   _strOrDate,
-  _platformPatch,
-  _platformPut,
-  _platformPost,
-  _platformDelete,
+  _apperatePatch,
+  _apperatePut,
+  _apperatePost,
+  _apperateDelete,
   IEXJSException,
   _get,
 } from "../common";
@@ -111,7 +111,7 @@ export const queryMeta = (options, standardOptions = {}) =>
     ...standardOptions,
   });
 
-Client.platform.prototype.queryMeta = function (options, standardOptions) {
+Client.apperate.prototype.queryMeta = function (options, standardOptions) {
   return queryMeta(options, {
     token: this._token,
     version: this._version,

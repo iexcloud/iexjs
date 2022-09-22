@@ -33,6 +33,6 @@ export * from "./stocks";
 export * from "./streaming";
 export * from "./timeseries";
 export * from "./treasuries";
-export * from "./platform";
+export * from "./apperate";
 
 export * from "./client";
