@@ -17,8 +17,8 @@ import { _URL_PREFIX_CLOUD } from "./urls";
  *
  * @param {object} options
  */
-const _getIEXCloudPlatform = (options) =>
-  _pppIEXCloudPlatformBase({
+const _getIEXCloudApperate = (options) =>
+  _pppIEXCloudApperateBase({
     base_url: _URL_PREFIX_CLOUD,
     method: "GET",
     ...options,
@@ -28,7 +28,7 @@ const _getIEXCloudPlatform = (options) =>
  *
  * @param {object} options
  */
-const _pppIEXCloudPlatformBase = async (options) => {
+const _pppIEXCloudApperateBase = async (options) => {
   const {
     base_url,
     method,
@@ -67,8 +67,8 @@ const _pppIEXCloudPlatformBase = async (options) => {
  *
  * @param {object} options
  */
-const _postIEXCloudPlatform = (options) =>
-  _pppIEXCloudPlatformBase({
+const _postIEXCloudApperate = (options) =>
+  _pppIEXCloudApperateBase({
     base_url: _URL_PREFIX_CLOUD,
     method: "POST",
     ...options,
@@ -78,8 +78,8 @@ const _postIEXCloudPlatform = (options) =>
  *
  * @param {object} options
  */
-const _putIEXCloudPlatform = (options) =>
-  _pppIEXCloudPlatformBase({
+const _putIEXCloudApperate = (options) =>
+  _pppIEXCloudApperateBase({
     base_url: _URL_PREFIX_CLOUD,
     method: "PUT",
     ...options,
@@ -89,8 +89,8 @@ const _putIEXCloudPlatform = (options) =>
  *
  * @param {object} options
  */
-const _patchIEXCloudPlatform = (options) =>
-  _pppIEXCloudPlatformBase({
+const _patchIEXCloudApperate = (options) =>
+  _pppIEXCloudApperateBase({
     base_url: _URL_PREFIX_CLOUD,
     method: "PATCH",
     ...options,
@@ -100,7 +100,7 @@ const _patchIEXCloudPlatform = (options) =>
  *
  * @param {object} options
  */
-const _deleteIEXCloudPlatformBase = async (options) => {
+const _deleteIEXCloudApperateBase = async (options) => {
   const {
     base_url = _URL_PREFIX_CLOUD,
     url,
@@ -133,29 +133,29 @@ const _deleteIEXCloudPlatformBase = async (options) => {
  * for backwards compat, accepting token and version but ignoring
  * @param {object} options
  */
-export const _platformGet = async (options) => _getIEXCloudPlatform(options);
+export const _apperateGet = async (options) => _getIEXCloudApperate(options);
 
 /**
  *
  * @param {object} options
  */
-export const _platformPost = async (options) => _postIEXCloudPlatform(options);
+export const _apperatePost = async (options) => _postIEXCloudApperate(options);
 
 /**
  *
  * @param {object} options
  */
-export const _platformPut = async (options) => _putIEXCloudPlatform(options);
+export const _apperatePut = async (options) => _putIEXCloudApperate(options);
 
 /**
  *
  * @param {object} options
  */
-export const _platformPatch = async (options) =>
-  _patchIEXCloudPlatform(options);
+export const _apperatePatch = async (options) =>
+  _patchIEXCloudApperate(options);
 /**
  *
  * @param {object} options
  */
-export const _platformDelete = (options) =>
-  _deleteIEXCloudPlatformBase(options);
+export const _apperateDelete = (options) =>
+  _deleteIEXCloudApperateBase(options);

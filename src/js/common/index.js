@@ -10,4 +10,4 @@
 export * from "./checks";
 export * from "./exception";
 export * from "./urls";
-export * from "./platformUrls";
+export * from "./apperateUrls";

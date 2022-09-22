@@ -7,14 +7,14 @@
  *
  */
 import {
-  _platformGet,
+  _apperateGet,
   _dateRange,
   _quoteSymbols,
   _strOrDate,
-  _platformPatch,
-  _platformPut,
-  _platformPost,
-  _platformDelete,
+  _apperatePatch,
+  _apperatePut,
+  _apperatePost,
+  _apperateDelete,
   IEXJSException,
   _get,
 } from "../common";
@@ -34,7 +34,7 @@ export const createDataJob = (args, standardOptions) => {
     else if (required) throw IEXJSException(`Must provide '${name}'`);
     else break;
   }
-  return _platformPost({
+  return _apperatePost({
     url,
     data,
     contentType,
@@ -46,7 +46,7 @@ export const createDataJob = (args, standardOptions) => {
   });
 };
 
-Client.platform.prototype.createDataJob = function (options, standardOptions) {
+Client.apperate.prototype.createDataJob = function (options, standardOptions) {
   return createDataJob(options, {
     token: this._token,
     version: this._version,
@@ -65,7 +65,7 @@ export const listDataJobs = (args, standardOptions) => {
     else if (required) throw IEXJSException(`Must provide '${name}'`);
     else break;
   }
-  return _platformGet({
+  return _apperateGet({
     url,
     queryParams: qpNames,
     ...Object.fromEntries(
@@ -75,7 +75,7 @@ export const listDataJobs = (args, standardOptions) => {
   });
 };
 
-Client.platform.prototype.listDataJobs = function (options, standardOptions) {
+Client.apperate.prototype.listDataJobs = function (options, standardOptions) {
   return listDataJobs(options, {
     token: this._token,
     version: this._version,
@@ -94,7 +94,7 @@ export const queryDataJobs = (args, standardOptions) => {
     else if (required) throw IEXJSException(`Must provide '${name}'`);
     else break;
   }
-  return _platformGet({
+  return _apperateGet({
     url,
     queryParams: qpNames,
     ...Object.fromEntries(
@@ -104,7 +104,7 @@ export const queryDataJobs = (args, standardOptions) => {
   });
 };
 
-Client.platform.prototype.queryDataJobs = function (options, standardOptions) {
+Client.apperate.prototype.queryDataJobs = function (options, standardOptions) {
   return queryDataJobs(options, {
     token: this._token,
     version: this._version,
@@ -124,7 +124,7 @@ export const getDataJob = (args, standardOptions) => {
     else if (required) throw IEXJSException(`Must provide '${name}'`);
     else break;
   }
-  return _platformGet({
+  return _apperateGet({
     url,
     queryParams: qpNames,
     ...Object.fromEntries(
@@ -134,7 +134,7 @@ export const getDataJob = (args, standardOptions) => {
   });
 };
 
-Client.platform.prototype.getDataJob = function (options, standardOptions) {
+Client.apperate.prototype.getDataJob = function (options, standardOptions) {
   return getDataJob(options, {
     token: this._token,
     version: this._version,
@@ -154,7 +154,7 @@ export const getInvalidRecordsLog = (args, standardOptions) => {
     else if (required) throw IEXJSException(`Must provide '${name}'`);
     else break;
   }
-  return _platformGet({
+  return _apperateGet({
     url,
     queryParams: qpNames,
     ...Object.fromEntries(
@@ -164,7 +164,7 @@ export const getInvalidRecordsLog = (args, standardOptions) => {
   });
 };
 
-Client.platform.prototype.getInvalidRecordsLog = function (
+Client.apperate.prototype.getInvalidRecordsLog = function (
   options,
   standardOptions
 ) {
@@ -186,7 +186,7 @@ export const cancelIngestionJob = (args, standardOptions) => {
     else if (required) throw IEXJSException(`Must provide '${name}'`);
     else break;
   }
-  return _platformGet({
+  return _apperateGet({
     url,
     queryParams: qpNames,
     ...Object.fromEntries(
@@ -196,7 +196,7 @@ export const cancelIngestionJob = (args, standardOptions) => {
   });
 };
 
-Client.platform.prototype.cancelIngestionJob = function (
+Client.apperate.prototype.cancelIngestionJob = function (
   options,
   standardOptions
 ) {
@@ -215,7 +215,7 @@ export const configureS3ingegration = (args, standardOptions) => {
     else if (required) throw IEXJSException(`Must provide '${name}'`);
     else break;
   }
-  return _platformGet({
+  return _apperateGet({
     url,
     queryParams: qpNames,
     ...Object.fromEntries(
@@ -225,7 +225,7 @@ export const configureS3ingegration = (args, standardOptions) => {
   });
 };
 
-Client.platform.prototype.configureS3ingegration = function (
+Client.apperate.prototype.configureS3ingegration = function (
   options,
   standardOptions
 ) {
@@ -237,11 +237,11 @@ Client.platform.prototype.configureS3ingegration = function (
 };
 
 export const getSwagger = (args, standardOptions) => {
-  let url = "platform/swagger-json";
-  return _platformGet({ url, ...standardOptions });
+  let url = "apperate/swagger-json";
+  return _apperateGet({ url, ...standardOptions });
 };
 
-Client.platform.prototype.getSwagger = function (options, standardOptions) {
+Client.apperate.prototype.getSwagger = function (options, standardOptions) {
   return getSwagger(options, {
     token: this._token,
     version: this._version,
@@ -257,7 +257,7 @@ export const listDatasets = (args, standardOptions) => {
     else if (required) throw IEXJSException(`Must provide '${name}'`);
     else break;
   }
-  return _platformGet({
+  return _apperateGet({
     url,
     queryParams: qpNames,
     ...Object.fromEntries(
@@ -267,7 +267,7 @@ export const listDatasets = (args, standardOptions) => {
   });
 };
 
-Client.platform.prototype.listDatasets = function (options, standardOptions) {
+Client.apperate.prototype.listDatasets = function (options, standardOptions) {
   return listDatasets(options, {
     token: this._token,
     version: this._version,
@@ -286,7 +286,7 @@ export const getDataset = (args, standardOptions) => {
     else if (required) throw IEXJSException(`Must provide '${name}'`);
     else break;
   }
-  return _platformGet({
+  return _apperateGet({
     url,
     queryParams: qpNames,
     ...Object.fromEntries(
@@ -296,7 +296,7 @@ export const getDataset = (args, standardOptions) => {
   });
 };
 
-Client.platform.prototype.getDataset = function (options, standardOptions) {
+Client.apperate.prototype.getDataset = function (options, standardOptions) {
   return getDataset(options, {
     token: this._token,
     version: this._version,
@@ -314,7 +314,7 @@ export const registerDataset = (args, standardOptions) => {
     else if (required) throw IEXJSException(`Must provide '${name}'`);
     else break;
   }
-  return _platformPost({
+  return _apperatePost({
     url,
     data,
     contentType,
@@ -326,7 +326,7 @@ export const registerDataset = (args, standardOptions) => {
   });
 };
 
-Client.platform.prototype.registerDataset = function (
+Client.apperate.prototype.registerDataset = function (
   options,
   standardOptions
 ) {
@@ -350,7 +350,7 @@ export const updateDataset = (args, standardOptions) => {
     else if (required) throw IEXJSException(`Must provide '${name}'`);
     else break;
   }
-  return _platformPost({
+  return _apperatePost({
     url,
     data,
     contentType,
@@ -362,7 +362,7 @@ export const updateDataset = (args, standardOptions) => {
   });
 };
 
-Client.platform.prototype.updateDataset = function (options, standardOptions) {
+Client.apperate.prototype.updateDataset = function (options, standardOptions) {
   return updateDataset(options, {
     token: this._token,
     version: this._version,
@@ -383,7 +383,7 @@ export const patchDataset = (args, standardOptions) => {
     else if (required) throw IEXJSException(`Must provide '${name}'`);
     else break;
   }
-  return _platformPatch({
+  return _apperatePatch({
     url,
     data,
     contentType,
@@ -395,7 +395,7 @@ export const patchDataset = (args, standardOptions) => {
   });
 };
 
-Client.platform.prototype.patchDataset = function (options, standardOptions) {
+Client.apperate.prototype.patchDataset = function (options, standardOptions) {
   return patchDataset(options, {
     token: this._token,
     version: this._version,
@@ -415,7 +415,7 @@ export const renameDataset = (args, standardOptions) => {
     else if (required) throw IEXJSException(`Must provide '${name}'`);
     else break;
   }
-  return _platformPut({
+  return _apperatePut({
     url,
     queryParams: qpNames,
     ...Object.fromEntries(
@@ -425,7 +425,7 @@ export const renameDataset = (args, standardOptions) => {
   });
 };
 
-Client.platform.prototype.renameDataset = function (options, standardOptions) {
+Client.apperate.prototype.renameDataset = function (options, standardOptions) {
   return renameDataset(options, {
     token: this._token,
     version: this._version,
@@ -444,7 +444,7 @@ export const deleteDataset = (args, standardOptions) => {
     else if (required) throw IEXJSException(`Must provide '${name}'`);
     else break;
   }
-  return _platformDelete({
+  return _apperateDelete({
     url,
     queryParams: qpNames,
     ...Object.fromEntries(
@@ -454,7 +454,7 @@ export const deleteDataset = (args, standardOptions) => {
   });
 };
 
-Client.platform.prototype.deleteDataset = function (options, standardOptions) {
+Client.apperate.prototype.deleteDataset = function (options, standardOptions) {
   return deleteDataset(options, {
     token: this._token,
     version: this._version,
@@ -481,7 +481,7 @@ export const loadData = (args, standardOptions) => {
     else if (required) throw IEXJSException(`Must provide '${name}'`);
     else break;
   }
-  return _platformPost({
+  return _apperatePost({
     url,
     data,
     contentType,
@@ -493,7 +493,7 @@ export const loadData = (args, standardOptions) => {
   });
 };
 
-Client.platform.prototype.loadData = function (options, standardOptions) {
+Client.apperate.prototype.loadData = function (options, standardOptions) {
   return loadData(options, {
     token: this._token,
     version: this._version,
@@ -515,7 +515,7 @@ export const deleteData = (args, standardOptions) => {
     else if (required) throw IEXJSException(`Must provide '${name}'`);
     else break;
   }
-  return _platformDelete({
+  return _apperateDelete({
     url,
     queryParams: qpNames,
     ...Object.fromEntries(
@@ -525,7 +525,7 @@ export const deleteData = (args, standardOptions) => {
   });
 };
 
-Client.platform.prototype.deleteData = function (options, standardOptions) {
+Client.apperate.prototype.deleteData = function (options, standardOptions) {
   return deleteData(options, {
     token: this._token,
     version: this._version,
@@ -552,7 +552,7 @@ export const queryDatasets = (args, standardOptions) => {
     else if (required) throw IEXJSException(`Must provide '${name}'`);
     else break;
   }
-  return _platformGet({
+  return _apperateGet({
     url,
     queryParams: qpNames,
     ...Object.fromEntries(
@@ -562,7 +562,7 @@ export const queryDatasets = (args, standardOptions) => {
   });
 };
 
-Client.platform.prototype.queryDatasets = function (options, standardOptions) {
+Client.apperate.prototype.queryDatasets = function (options, standardOptions) {
   return queryDatasets(options, {
     token: this._token,
     version: this._version,
@@ -611,7 +611,7 @@ export const queryData = (args, standardOptions) => {
     else if (required) throw IEXJSException(`Must provide '${name}'`);
     else break;
   }
-  return _platformGet({
+  return _apperateGet({
     url,
     queryParams: qpNames,
     ...Object.fromEntries(
@@ -621,7 +621,7 @@ export const queryData = (args, standardOptions) => {
   });
 };
 
-Client.platform.prototype.queryData = function (options, standardOptions) {
+Client.apperate.prototype.queryData = function (options, standardOptions) {
   return queryData(options, {
     token: this._token,
     version: this._version,
@@ -640,7 +640,7 @@ export const sampleDataSource = (args, standardOptions) => {
     else if (required) throw IEXJSException(`Must provide '${name}'`);
     else break;
   }
-  return _platformGet({
+  return _apperateGet({
     url,
     queryParams: qpNames,
     ...Object.fromEntries(
@@ -650,7 +650,7 @@ export const sampleDataSource = (args, standardOptions) => {
   });
 };
 
-Client.platform.prototype.sampleDataSource = function (
+Client.apperate.prototype.sampleDataSource = function (
   options,
   standardOptions
 ) {
@@ -685,7 +685,7 @@ export const queryMeta = (args, standardOptions) => {
     else if (required) throw IEXJSException(`Must provide '${name}'`);
     else break;
   }
-  return _platformGet({
+  return _apperateGet({
     url,
     queryParams: qpNames,
     ...Object.fromEntries(
@@ -695,7 +695,7 @@ export const queryMeta = (args, standardOptions) => {
   });
 };
 
-Client.platform.prototype.queryMeta = function (options, standardOptions) {
+Client.apperate.prototype.queryMeta = function (options, standardOptions) {
   return queryMeta(options, {
     token: this._token,
     version: this._version,
@@ -711,7 +711,7 @@ export const sqlQuery = (args, standardOptions) => {
     else if (required) throw IEXJSException(`Must provide '${name}'`);
     else break;
   }
-  return _platformGet({
+  return _apperateGet({
     url,
     queryParams: qpNames,
     ...Object.fromEntries(
@@ -721,7 +721,7 @@ export const sqlQuery = (args, standardOptions) => {
   });
 };
 
-Client.platform.prototype.sqlQuery = function (options, standardOptions) {
+Client.apperate.prototype.sqlQuery = function (options, standardOptions) {
   return sqlQuery(options, {
     token: this._token,
     version: this._version,
@@ -737,7 +737,7 @@ export const fetchLogs = (args, standardOptions) => {
     else if (required) throw IEXJSException(`Must provide '${name}'`);
     else break;
   }
-  return _platformGet({
+  return _apperateGet({
     url,
     queryParams: qpNames,
     ...Object.fromEntries(
@@ -747,7 +747,7 @@ export const fetchLogs = (args, standardOptions) => {
   });
 };
 
-Client.platform.prototype.fetchLogs = function (options, standardOptions) {
+Client.apperate.prototype.fetchLogs = function (options, standardOptions) {
   return fetchLogs(options, {
     token: this._token,
     version: this._version,
@@ -766,7 +766,7 @@ export const generateSchemaFromDefinedDataSource = (args, standardOptions) => {
     else if (required) throw IEXJSException(`Must provide '${name}'`);
     else break;
   }
-  return _platformGet({
+  return _apperateGet({
     url,
     queryParams: qpNames,
     ...Object.fromEntries(
@@ -776,7 +776,7 @@ export const generateSchemaFromDefinedDataSource = (args, standardOptions) => {
   });
 };
 
-Client.platform.prototype.generateSchemaFromDefinedDataSource = function (
+Client.apperate.prototype.generateSchemaFromDefinedDataSource = function (
   options,
   standardOptions
 ) {
@@ -797,7 +797,7 @@ export const generateSchemaFromRemoteDataSource = (args, standardOptions) => {
     else if (required) throw IEXJSException(`Must provide '${name}'`);
     else break;
   }
-  return _platformPost({
+  return _apperatePost({
     url,
     data,
     contentType,
@@ -809,7 +809,7 @@ export const generateSchemaFromRemoteDataSource = (args, standardOptions) => {
   });
 };
 
-Client.platform.prototype.generateSchemaFromRemoteDataSource = function (
+Client.apperate.prototype.generateSchemaFromRemoteDataSource = function (
   options,
   standardOptions
 ) {
@@ -830,7 +830,7 @@ export const createDataSource = (args, standardOptions) => {
     else if (required) throw IEXJSException(`Must provide '${name}'`);
     else break;
   }
-  return _platformPost({
+  return _apperatePost({
     url,
     data,
     contentType,
@@ -842,7 +842,7 @@ export const createDataSource = (args, standardOptions) => {
   });
 };
 
-Client.platform.prototype.createDataSource = function (
+Client.apperate.prototype.createDataSource = function (
   options,
   standardOptions
 ) {
@@ -885,7 +885,7 @@ export const getDataSource = (args, standardOptions) => {
     else if (required) throw IEXJSException(`Must provide '${name}'`);
     else break;
   }
-  return _platformGet({
+  return _apperateGet({
     url,
     queryParams: qpNames,
     ...Object.fromEntries(
@@ -895,7 +895,7 @@ export const getDataSource = (args, standardOptions) => {
   });
 };
 
-Client.platform.prototype.getDataSource = function (options, standardOptions) {
+Client.apperate.prototype.getDataSource = function (options, standardOptions) {
   return getDataSource(options, {
     token: this._token,
     version: this._version,
@@ -916,7 +916,7 @@ export const updateDataSource = (args, standardOptions) => {
     else if (required) throw IEXJSException(`Must provide '${name}'`);
     else break;
   }
-  return _platformPut({
+  return _apperatePut({
     url,
     data,
     contentType,
@@ -928,7 +928,7 @@ export const updateDataSource = (args, standardOptions) => {
   });
 };
 
-Client.platform.prototype.updateDataSource = function (
+Client.apperate.prototype.updateDataSource = function (
   options,
   standardOptions
 ) {
@@ -950,7 +950,7 @@ export const deleteDataSource = (args, standardOptions) => {
     else if (required) throw IEXJSException(`Must provide '${name}'`);
     else break;
   }
-  return _platformDelete({
+  return _apperateDelete({
     url,
     queryParams: qpNames,
     ...Object.fromEntries(
@@ -960,7 +960,7 @@ export const deleteDataSource = (args, standardOptions) => {
   });
 };
 
-Client.platform.prototype.deleteDataSource = function (
+Client.apperate.prototype.deleteDataSource = function (
   options,
   standardOptions
 ) {
@@ -981,7 +981,7 @@ export const createIngestionSchedule = (args, standardOptions) => {
     else if (required) throw IEXJSException(`Must provide '${name}'`);
     else break;
   }
-  return _platformPost({
+  return _apperatePost({
     url,
     data,
     contentType,
@@ -993,7 +993,7 @@ export const createIngestionSchedule = (args, standardOptions) => {
   });
 };
 
-Client.platform.prototype.createIngestionSchedule = function (
+Client.apperate.prototype.createIngestionSchedule = function (
   options,
   standardOptions
 ) {
@@ -1036,7 +1036,7 @@ export const getIngestionSchedule = (args, standardOptions) => {
     else if (required) throw IEXJSException(`Must provide '${name}'`);
     else break;
   }
-  return _platformGet({
+  return _apperateGet({
     url,
     queryParams: qpNames,
     ...Object.fromEntries(
@@ -1046,7 +1046,7 @@ export const getIngestionSchedule = (args, standardOptions) => {
   });
 };
 
-Client.platform.prototype.getIngestionSchedule = function (
+Client.apperate.prototype.getIngestionSchedule = function (
   options,
   standardOptions
 ) {
@@ -1070,7 +1070,7 @@ export const updateIngestionSchedule = (args, standardOptions) => {
     else if (required) throw IEXJSException(`Must provide '${name}'`);
     else break;
   }
-  return _platformPut({
+  return _apperatePut({
     url,
     data,
     contentType,
@@ -1082,7 +1082,7 @@ export const updateIngestionSchedule = (args, standardOptions) => {
   });
 };
 
-Client.platform.prototype.updateIngestionSchedule = function (
+Client.apperate.prototype.updateIngestionSchedule = function (
   options,
   standardOptions
 ) {
@@ -1104,7 +1104,7 @@ export const deleteIngestionSchedule = (args, standardOptions) => {
     else if (required) throw IEXJSException(`Must provide '${name}'`);
     else break;
   }
-  return _platformDelete({
+  return _apperateDelete({
     url,
     queryParams: qpNames,
     ...Object.fromEntries(
@@ -1114,7 +1114,7 @@ export const deleteIngestionSchedule = (args, standardOptions) => {
   });
 };
 
-Client.platform.prototype.deleteIngestionSchedule = function (
+Client.apperate.prototype.deleteIngestionSchedule = function (
   options,
   standardOptions
 ) {
@@ -1135,7 +1135,7 @@ export const createCredential = (args, standardOptions) => {
     else if (required) throw IEXJSException(`Must provide '${name}'`);
     else break;
   }
-  return _platformPost({
+  return _apperatePost({
     url,
     data,
     contentType,
@@ -1147,7 +1147,7 @@ export const createCredential = (args, standardOptions) => {
   });
 };
 
-Client.platform.prototype.createCredential = function (
+Client.apperate.prototype.createCredential = function (
   options,
   standardOptions
 ) {
@@ -1190,7 +1190,7 @@ export const getCredential = (args, standardOptions) => {
     else if (required) throw IEXJSException(`Must provide '${name}'`);
     else break;
   }
-  return _platformGet({
+  return _apperateGet({
     url,
     queryParams: qpNames,
     ...Object.fromEntries(
@@ -1200,7 +1200,7 @@ export const getCredential = (args, standardOptions) => {
   });
 };
 
-Client.platform.prototype.getCredential = function (options, standardOptions) {
+Client.apperate.prototype.getCredential = function (options, standardOptions) {
   return getCredential(options, {
     token: this._token,
     version: this._version,
@@ -1221,7 +1221,7 @@ export const updateCredential = (args, standardOptions) => {
     else if (required) throw IEXJSException(`Must provide '${name}'`);
     else break;
   }
-  return _platformPut({
+  return _apperatePut({
     url,
     data,
     contentType,
@@ -1233,7 +1233,7 @@ export const updateCredential = (args, standardOptions) => {
   });
 };
 
-Client.platform.prototype.updateCredential = function (
+Client.apperate.prototype.updateCredential = function (
   options,
   standardOptions
 ) {
@@ -1255,7 +1255,7 @@ export const deleteCredential = (args, standardOptions) => {
     else if (required) throw IEXJSException(`Must provide '${name}'`);
     else break;
   }
-  return _platformDelete({
+  return _apperateDelete({
     url,
     queryParams: qpNames,
     ...Object.fromEntries(
@@ -1265,7 +1265,7 @@ export const deleteCredential = (args, standardOptions) => {
   });
 };
 
-Client.platform.prototype.deleteCredential = function (
+Client.apperate.prototype.deleteCredential = function (
   options,
   standardOptions
 ) {
@@ -1286,7 +1286,7 @@ export const createIngestionHistory = (args, standardOptions) => {
     else if (required) throw IEXJSException(`Must provide '${name}'`);
     else break;
   }
-  return _platformPost({
+  return _apperatePost({
     url,
     data,
     contentType,
@@ -1298,7 +1298,7 @@ export const createIngestionHistory = (args, standardOptions) => {
   });
 };
 
-Client.platform.prototype.createIngestionHistory = function (
+Client.apperate.prototype.createIngestionHistory = function (
   options,
   standardOptions
 ) {
@@ -1341,7 +1341,7 @@ export const getIngestionHistory = (args, standardOptions) => {
     else if (required) throw IEXJSException(`Must provide '${name}'`);
     else break;
   }
-  return _platformGet({
+  return _apperateGet({
     url,
     queryParams: qpNames,
     ...Object.fromEntries(
@@ -1351,7 +1351,7 @@ export const getIngestionHistory = (args, standardOptions) => {
   });
 };
 
-Client.platform.prototype.getIngestionHistory = function (
+Client.apperate.prototype.getIngestionHistory = function (
   options,
   standardOptions
 ) {
@@ -1375,7 +1375,7 @@ export const updateIngestionHistory = (args, standardOptions) => {
     else if (required) throw IEXJSException(`Must provide '${name}'`);
     else break;
   }
-  return _platformPut({
+  return _apperatePut({
     url,
     data,
     contentType,
@@ -1387,7 +1387,7 @@ export const updateIngestionHistory = (args, standardOptions) => {
   });
 };
 
-Client.platform.prototype.updateIngestionHistory = function (
+Client.apperate.prototype.updateIngestionHistory = function (
   options,
   standardOptions
 ) {
@@ -1409,7 +1409,7 @@ export const deleteIngestionHistory = (args, standardOptions) => {
     else if (required) throw IEXJSException(`Must provide '${name}'`);
     else break;
   }
-  return _platformDelete({
+  return _apperateDelete({
     url,
     queryParams: qpNames,
     ...Object.fromEntries(
@@ -1419,7 +1419,7 @@ export const deleteIngestionHistory = (args, standardOptions) => {
   });
 };
 
-Client.platform.prototype.deleteIngestionHistory = function (
+Client.apperate.prototype.deleteIngestionHistory = function (
   options,
   standardOptions
 ) {
