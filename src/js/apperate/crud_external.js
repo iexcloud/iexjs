@@ -142,6 +142,32 @@ Client.apperate.prototype.getDataJob = function (options, standardOptions) {
   });
 };
 
+export const fetchLogs = (args, standardOptions) => {
+  const qpNames = ["period", "token"];
+  let url = "logs";
+  for (const { name, required } of [{ name: "workspace", required: true }]) {
+    if (name in args) url += "/" + args[name];
+    else if (required) throw IEXJSException(`Must provide '${name}'`);
+    else break;
+  }
+  return _apperateGet({
+    url,
+    queryParams: qpNames,
+    ...Object.fromEntries(
+      qpNames.filter((el) => el in args).map((el) => [el, args[el]])
+    ),
+    ...standardOptions,
+  });
+};
+
+Client.apperate.prototype.fetchLogs = function (options, standardOptions) {
+  return fetchLogs(options, {
+    token: this._token,
+    version: this._version,
+    ...standardOptions,
+  });
+};
+
 export const getInvalidRecordsLog = (args, standardOptions) => {
   const qpNames = ["token"];
   let url = "jobs";
@@ -237,7 +263,7 @@ Client.apperate.prototype.configureS3ingegration = function (
 };
 
 export const getSwagger = (args, standardOptions) => {
-  let url = "apperate/swagger-json";
+  let url = "openapi-doc";
   return _apperateGet({ url, ...standardOptions });
 };
 
@@ -534,18 +560,7 @@ Client.apperate.prototype.deleteData = function (options, standardOptions) {
 };
 
 export const queryDatasets = (args, standardOptions) => {
-  const qpNames = [
-    "cache",
-    "cacheTTL",
-    "token",
-    "callback",
-    "format",
-    "schema",
-    "filter",
-    "id",
-    "source",
-    "key",
-  ];
+  const qpNames = ["token"];
   let url = "data";
   for (const { name, required } of [{ name: "workspace", required: false }]) {
     if (name in args) url += "/" + args[name];
@@ -634,7 +649,7 @@ export const sampleDataSource = (args, standardOptions) => {
   let url = "sample-data-source";
   for (const { name, required } of [
     { name: "workspace", required: true },
-    { name: "objectId", required: true },
+    { name: "id", required: true },
   ]) {
     if (name in args) url += "/" + args[name];
     else if (required) throw IEXJSException(`Must provide '${name}'`);
@@ -662,18 +677,7 @@ Client.apperate.prototype.sampleDataSource = function (
 };
 
 export const queryMeta = (args, standardOptions) => {
-  const qpNames = [
-    "cache",
-    "cacheTTL",
-    "token",
-    "callback",
-    "format",
-    "schema",
-    "filter",
-    "force",
-    "limit",
-    "offset",
-  ];
+  const qpNames = ["token", "schema", "force", "limit", "offset"];
   let url = "meta";
   for (const { name, required } of [
     { name: "workspace", required: false },
@@ -703,64 +707,12 @@ Client.apperate.prototype.queryMeta = function (options, standardOptions) {
   });
 };
 
-export const sqlQuery = (args, standardOptions) => {
-  const qpNames = ["token", "includeSystemRecordProperties", "sqlQuery"];
-  let url = "sql-query";
-  for (const { name, required } of [{ name: "workspace", required: true }]) {
-    if (name in args) url += "/" + args[name];
-    else if (required) throw IEXJSException(`Must provide '${name}'`);
-    else break;
-  }
-  return _apperateGet({
-    url,
-    queryParams: qpNames,
-    ...Object.fromEntries(
-      qpNames.filter((el) => el in args).map((el) => [el, args[el]])
-    ),
-    ...standardOptions,
-  });
-};
-
-Client.apperate.prototype.sqlQuery = function (options, standardOptions) {
-  return sqlQuery(options, {
-    token: this._token,
-    version: this._version,
-    ...standardOptions,
-  });
-};
-
-export const fetchLogs = (args, standardOptions) => {
-  const qpNames = ["period", "token"];
-  let url = "logs";
-  for (const { name, required } of [{ name: "workspace", required: true }]) {
-    if (name in args) url += "/" + args[name];
-    else if (required) throw IEXJSException(`Must provide '${name}'`);
-    else break;
-  }
-  return _apperateGet({
-    url,
-    queryParams: qpNames,
-    ...Object.fromEntries(
-      qpNames.filter((el) => el in args).map((el) => [el, args[el]])
-    ),
-    ...standardOptions,
-  });
-};
-
-Client.apperate.prototype.fetchLogs = function (options, standardOptions) {
-  return fetchLogs(options, {
-    token: this._token,
-    version: this._version,
-    ...standardOptions,
-  });
-};
-
 export const generateSchemaFromDefinedDataSource = (args, standardOptions) => {
   const qpNames = ["token", "credentialId"];
   let url = "generate-schema";
   for (const { name, required } of [
     { name: "workspace", required: true },
-    { name: "objectId", required: true },
+    { name: "id", required: true },
   ]) {
     if (name in args) url += "/" + args[name];
     else if (required) throw IEXJSException(`Must provide '${name}'`);
@@ -879,7 +831,7 @@ export const getDataSource = (args, standardOptions) => {
   let url = "data-sources";
   for (const { name, required } of [
     { name: "workspace", required: true },
-    { name: "objectId", required: false },
+    { name: "id", required: false },
   ]) {
     if (name in args) url += "/" + args[name];
     else if (required) throw IEXJSException(`Must provide '${name}'`);
@@ -910,7 +862,7 @@ export const updateDataSource = (args, standardOptions) => {
   let url = "data-sources";
   for (const { name, required } of [
     { name: "workspace", required: true },
-    { name: "objectId", required: false },
+    { name: "id", required: false },
   ]) {
     if (name in args) url += "/" + args[name];
     else if (required) throw IEXJSException(`Must provide '${name}'`);
@@ -944,7 +896,7 @@ export const deleteDataSource = (args, standardOptions) => {
   let url = "data-sources";
   for (const { name, required } of [
     { name: "workspace", required: true },
-    { name: "objectId", required: false },
+    { name: "id", required: false },
   ]) {
     if (name in args) url += "/" + args[name];
     else if (required) throw IEXJSException(`Must provide '${name}'`);
@@ -1030,7 +982,7 @@ export const getIngestionSchedule = (args, standardOptions) => {
   let url = "ingestion-schedules";
   for (const { name, required } of [
     { name: "workspace", required: true },
-    { name: "objectId", required: false },
+    { name: "id", required: false },
   ]) {
     if (name in args) url += "/" + args[name];
     else if (required) throw IEXJSException(`Must provide '${name}'`);
@@ -1064,7 +1016,7 @@ export const updateIngestionSchedule = (args, standardOptions) => {
   let url = "ingestion-schedules";
   for (const { name, required } of [
     { name: "workspace", required: true },
-    { name: "objectId", required: false },
+    { name: "id", required: false },
   ]) {
     if (name in args) url += "/" + args[name];
     else if (required) throw IEXJSException(`Must provide '${name}'`);
@@ -1098,7 +1050,7 @@ export const deleteIngestionSchedule = (args, standardOptions) => {
   let url = "ingestion-schedules";
   for (const { name, required } of [
     { name: "workspace", required: true },
-    { name: "objectId", required: false },
+    { name: "id", required: false },
   ]) {
     if (name in args) url += "/" + args[name];
     else if (required) throw IEXJSException(`Must provide '${name}'`);
@@ -1184,7 +1136,7 @@ export const getCredential = (args, standardOptions) => {
   let url = "credentials";
   for (const { name, required } of [
     { name: "workspace", required: true },
-    { name: "objectId", required: false },
+    { name: "id", required: false },
   ]) {
     if (name in args) url += "/" + args[name];
     else if (required) throw IEXJSException(`Must provide '${name}'`);
@@ -1215,7 +1167,7 @@ export const updateCredential = (args, standardOptions) => {
   let url = "credentials";
   for (const { name, required } of [
     { name: "workspace", required: true },
-    { name: "objectId", required: false },
+    { name: "id", required: false },
   ]) {
     if (name in args) url += "/" + args[name];
     else if (required) throw IEXJSException(`Must provide '${name}'`);
@@ -1249,7 +1201,7 @@ export const deleteCredential = (args, standardOptions) => {
   let url = "credentials";
   for (const { name, required } of [
     { name: "workspace", required: true },
-    { name: "objectId", required: false },
+    { name: "id", required: false },
   ]) {
     if (name in args) url += "/" + args[name];
     else if (required) throw IEXJSException(`Must provide '${name}'`);
@@ -1335,7 +1287,7 @@ export const getIngestionHistory = (args, standardOptions) => {
   let url = "ingestion-history";
   for (const { name, required } of [
     { name: "workspace", required: true },
-    { name: "objectId", required: false },
+    { name: "id", required: false },
   ]) {
     if (name in args) url += "/" + args[name];
     else if (required) throw IEXJSException(`Must provide '${name}'`);
@@ -1369,7 +1321,7 @@ export const updateIngestionHistory = (args, standardOptions) => {
   let url = "ingestion-history";
   for (const { name, required } of [
     { name: "workspace", required: true },
-    { name: "objectId", required: false },
+    { name: "id", required: false },
   ]) {
     if (name in args) url += "/" + args[name];
     else if (required) throw IEXJSException(`Must provide '${name}'`);
@@ -1403,7 +1355,7 @@ export const deleteIngestionHistory = (args, standardOptions) => {
   let url = "ingestion-history";
   for (const { name, required } of [
     { name: "workspace", required: true },
-    { name: "objectId", required: false },
+    { name: "id", required: false },
   ]) {
     if (name in args) url += "/" + args[name];
     else if (required) throw IEXJSException(`Must provide '${name}'`);
