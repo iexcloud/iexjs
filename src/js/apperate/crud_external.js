@@ -54,35 +54,6 @@ Client.apperate.prototype.createDataJob = function (options, standardOptions) {
   });
 };
 
-export const listDataJobs = (args, standardOptions) => {
-  const qpNames = ["token"];
-  let url = "jobs";
-  for (const { name, required } of [
-    { name: "workspace", required: true },
-    { name: "type", required: true },
-  ]) {
-    if (name in args) url += "/" + args[name];
-    else if (required) throw IEXJSException(`Must provide '${name}'`);
-    else break;
-  }
-  return _apperateGet({
-    url,
-    queryParams: qpNames,
-    ...Object.fromEntries(
-      qpNames.filter((el) => el in args).map((el) => [el, args[el]])
-    ),
-    ...standardOptions,
-  });
-};
-
-Client.apperate.prototype.listDataJobs = function (options, standardOptions) {
-  return listDataJobs(options, {
-    token: this._token,
-    version: this._version,
-    ...standardOptions,
-  });
-};
-
 export const queryDataJobs = (args, standardOptions) => {
   const qpNames = ["token", "limit", "from", "to", "last", "first", "sort"];
   let url = "jobs";

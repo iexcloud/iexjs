@@ -1,3 +1,8 @@
+0.8.0 / 2022-10-17
+==================
+
+  * Remove apperate.listDataJobs().  Use queryDataJobs() instead.
+
 0.7.0 / 2022-10-17
 ==================
 
