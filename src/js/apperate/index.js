@@ -19,6 +19,7 @@ import {
   _get,
 } from "../common";
 import { Client } from "../client";
+import { writeInternal } from "./crud_external";
 
 export const _queryUrl = (options) => {
   const {
@@ -52,7 +53,8 @@ export const _queryUrl = (options) => {
   if (workspace && id) base_url += `/${_quoteSymbols(id)}`;
   if (workspace && id && key) base_url += `/${_quoteSymbols(key)}`;
   if (workspace && id && key && subkey) base_url += `/${_quoteSymbols(subkey)}`;
-  if (workspace && id && key && subkey && date) base_url += `/${_quoteSymbols(date)}`;
+  if (workspace && id && key && subkey && date)
+    base_url += `/${_quoteSymbols(date)}`;
 
   base_url += "?";
 
@@ -113,6 +115,19 @@ export const queryMeta = (options, standardOptions = {}) =>
 
 Client.apperate.prototype.queryMeta = function (options, standardOptions) {
   return queryMeta(options, {
+    token: this._token,
+    version: this._version,
+    ...standardOptions,
+  });
+};
+
+export const write = (options, standardOptions = {}) => {
+  const args = { ...options, data: JSON.stringify(options.data) };
+  return writeInternal(args, standardOptions);
+};
+
+Client.apperate.prototype.write = function (options, standardOptions) {
+  return write(options, {
     token: this._token,
     version: this._version,
     ...standardOptions,

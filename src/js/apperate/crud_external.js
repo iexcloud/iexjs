@@ -498,6 +498,39 @@ Client.apperate.prototype.loadData = function (options, standardOptions) {
   });
 };
 
+export const writeInternal = (args, standardOptions) => {
+  const { data, contentType = "application/json" } = args;
+  const qpNames = ["token"];
+  if (!data) throw new IEXJSException("Must provide 'data'");
+  let url = "write";
+  for (const { name, required } of [
+    { name: "workspace", required: true },
+    { name: "id", required: true },
+  ]) {
+    if (name in args) url += "/" + args[name];
+    else if (required) throw IEXJSException(`Must provide '${name}'`);
+    else break;
+  }
+  return _apperatePost({
+    url,
+    data,
+    contentType,
+    queryParams: qpNames,
+    ...Object.fromEntries(
+      qpNames.filter((el) => el in args).map((el) => [el, args[el]])
+    ),
+    ...standardOptions,
+  });
+};
+
+Client.apperate.prototype.writeInternal = function (options, standardOptions) {
+  return writeInternal(options, {
+    token: this._token,
+    version: this._version,
+    ...standardOptions,
+  });
+};
+
 export const deleteData = (args, standardOptions) => {
   const qpNames = ["token", "from", "to"];
   let url = "data";
@@ -583,6 +616,7 @@ export const queryData = (args, standardOptions) => {
     "updated",
     "dateField",
     "transform",
+    "batchSeparator",
     "includeInternalRecordProperties",
     "queryId",
   ];
