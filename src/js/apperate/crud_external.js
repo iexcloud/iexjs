@@ -500,7 +500,12 @@ Client.apperate.prototype.loadData = function (options, standardOptions) {
 
 export const writeInternal = (args, standardOptions) => {
   const { data, contentType = "application/json" } = args;
-  const qpNames = ["token"];
+  const qpNames = [
+    "token",
+    "duplicateKeyHandling",
+    "createDatasetOnDemand",
+    "wait",
+  ];
   if (!data) throw new IEXJSException("Must provide 'data'");
   let url = "write";
   for (const { name, required } of [
