@@ -15,7 +15,7 @@ Please subscribe to IEX Cloud using [this referral code](https://iexcloud.io/s/6
 Use [npm](https://www.npmjs.com) to install iexjs.
 
 ```bash
-npm install --save iexjs
+npm i @apperate/iexjs
 ```
 
 > iexjs can also run in the browser via native *fetch* and *eventsource*, or from node via [cross-fetch](https://www.npmjs.com/package/cross-fetch) and [eventsource](https://github.com/EventSource/eventsource).
