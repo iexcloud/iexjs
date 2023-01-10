@@ -19,7 +19,7 @@ import {
   _get,
 } from "../common";
 import { Client } from "../client";
-import { writeInternal } from "./crud_external";
+import { postInternal } from "./crud_external";
 
 export const _queryUrl = (options) => {
   const {
@@ -121,13 +121,13 @@ Client.apperate.prototype.queryMeta = function (options, standardOptions) {
   });
 };
 
-export const write = (options, standardOptions = {}) => {
+export const post = (options, standardOptions = {}) => {
   const args = { ...options, data: JSON.stringify(options.data) };
-  return writeInternal(args, standardOptions);
+  return postInternal(args, standardOptions);
 };
 
-Client.apperate.prototype.write = function (options, standardOptions) {
-  return write(options, {
+Client.apperate.prototype.post = function (options, standardOptions) {
+  return post(options, {
     token: this._token,
     version: this._version,
     ...standardOptions,

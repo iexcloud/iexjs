@@ -498,7 +498,7 @@ Client.apperate.prototype.loadData = function (options, standardOptions) {
   });
 };
 
-export const writeInternal = (args, standardOptions) => {
+export const postInternal = (args, standardOptions) => {
   const { data, contentType = "application/json" } = args;
   const qpNames = [
     "token",
@@ -528,8 +528,8 @@ export const writeInternal = (args, standardOptions) => {
   });
 };
 
-Client.apperate.prototype.writeInternal = function (options, standardOptions) {
-  return writeInternal(options, {
+Client.apperate.prototype.postInternal = function (options, standardOptions) {
+  return postInternal(options, {
     token: this._token,
     version: this._version,
     ...standardOptions,
