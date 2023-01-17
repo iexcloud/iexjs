@@ -507,7 +507,7 @@ export const writeInternal = (args, standardOptions) => {
     "wait",
   ];
   if (!data) throw new IEXJSException("Must provide 'data'");
-  let url = "write";
+  let url = "record";
   for (const { name, required } of [
     { name: "workspace", required: true },
     { name: "id", required: true },
