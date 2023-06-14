@@ -28,19 +28,15 @@ The iexjs `Client` object stores your [API token](https://iexcloud.io/documentat
 
 Here are some examples.
 
-**Get a real-time stock quote:**
+**Get a stock quote:**
 
 ```javascript
 const {Client} = require("@apperate/iexjs")
 const client = new Client({api_token: "TOKEN", version: "VERSION"});
-client.quote({symbol: "AAPL"}).then((res) => {
+client.apperate.queryData({key: "AAPL", workspace: "CORE", id: "QUOTE"}).then((res) => {
     console.log(res);
 });
 ```
-
-The code above calls the `quote` method to get a real-time price on the `AAPL` stock.
-
-> [iex.js Core Data Methods](https://iexcloud.io/documentation/developer-tools/iexjs-library/iexjs-core-data-methods.html) has information on all the methods.
 
 **Get cash flow details:**
 
@@ -55,6 +51,8 @@ client.apperate.queryData({key: "AAPL", workspace: "CORE", id: "CASH_FLOW"}).the
 The `apperate` methods wrap calls to [Apperate APIs](https://iexcloud.io/docs/apperate-apis/), including the [Data API](https://iexcloud.io/docs/apperate-apis/data/). The `queryData` method retrieves data from the dataset specified by the `id` parameter. You can retrieve data from any dataset you have access to, including `CORE` datasets.
 
 > [Querying Datasets with iex.js](https://iexcloud.io/documentation/interacting-with-your-data/querying-data/querying-datasets-with-iexjs.html) provides details on searching datasets.
+
+> The [iex.js apperate module documentation](./docs/iexjs_apperate.md) describes methods that operate on [Apperate](https://iexcloud.io/documentation/getting-started/what-is-iex-cloud-apperate.html) data, datasets, metadata, and more.
 
 ## IEX Cloud Legacy Examples
 
