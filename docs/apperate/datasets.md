@@ -104,7 +104,15 @@ An array of general workspace dataset information.
 
 ### Examples
 
-> Example - todo
+Example - List workspace datasets:
+
+```javascript
+client.apperate.listDatasets({workspace: "JHINKEYPROD"}).then((res) => {
+    console.log(res);
+});
+```
+
+Returns:
 
 ```javascript
 [
