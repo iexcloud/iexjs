@@ -21,7 +21,7 @@ apperate.getDataset(args: Object)
 
 ### Parameters
 
-For `args`, pass in an object that specifies the following parameters.
+This method takes an arguments object that specifies the following parameters.
 
 Parameter | Type | Description
 --------- | ---- | -----------
@@ -73,7 +73,7 @@ Returns:
 
 ### Additional Resources
 
-[Get a Dataset](https://iexcloud.io/docs/apperate-apis/datasets/get-a-dataset)
+[GET /datasets/:workspace/:id](https://iexcloud.io/docs/apperate-apis/datasets/get-a-dataset)
 
 [Create a Dataset with the API](https://iexcloud.io/documentation/managing-your-data/creating-a-dataset-with-the-api.html)
 
@@ -91,7 +91,7 @@ apperate.listDatasets(args: Object)
 
 ### Parameters
 
-For `args`, pass in an object that specifies the `workspace` and any of the following optional parameters.
+This method takes an arguments object that specifies the `workspace` and any of the following optional parameters.
 
 Parameter | Type | Description
 --------- | ---- | -----------
@@ -146,6 +146,6 @@ Returns:
 
 ### Additional Resources
 
-[List Datasets](https://iexcloud.io/docs/apperate-apis/datasets/list-datasets)
+[GET /datasets/:workspace](https://iexcloud.io/docs/apperate-apis/datasets/list-datasets)
 
 [Create a Dataset with the API](https://iexcloud.io/documentation/managing-your-data/creating-a-dataset-with-the-api.html)

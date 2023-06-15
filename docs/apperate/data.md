@@ -21,7 +21,7 @@ apperate.queryData(args)
 
 ### Parameters
 
-For `args`, pass in an object that specifies the following **Required** parameters and any of the following non-default parameters.
+This method takes an arguments object that specifies the following **Required** parameters and any of the following non-default parameters.
 
 Parameter | Type | Description
 --------- | ---- | -----------
@@ -147,7 +147,7 @@ apperate.write(args)
 
 ### Parameters
 
-For `args`, pass in an object that specifies the following **Required** parameters and any of the following non-default parameters.
+This method takes an arguments object that specifies the following **Required** parameters and any of the following non-default parameters.
 
 Parameter | Type | Description
 --------- | ---- | -----------
