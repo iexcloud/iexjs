@@ -2,10 +2,10 @@
 
 These JavaScript methods wrap Apperate [Data API](https://iexcloud.io/docs/apperate-apis/data) REST endpoints.
 
-Table of Contents:
+## Methods:
 
-- [queryData()](#apperatequerydata)
-- [write()](#apperatewrite)
+- [queryData()](#querydata)
+- [write()](#write)
 
 ---
 
@@ -16,12 +16,12 @@ Query data from the given dataset. For time series data, you can time-window the
 ### Syntax
 
 ```javascript
-apperate.queryData(args)
+apperate.queryData(args: Object)
 ```
 
 ### Parameters
 
-For `args`, pass in an object that specifies the following **Required** parameters and any of the following non-default parameters.
+This method takes an arguments object that specifies the following **Required** parameters and any of the following non-default parameters.
 
 Parameter | Type | Description
 --------- | ---- | -----------
@@ -81,12 +81,48 @@ An array of data record objects.
 
 ### Examples
 
-> Example - Get Apple's Cash Flow
+Example - Get Apple's Cash Flow
 
 ```javascript
 client.apperate.queryData({key: "AAPL", workspace: "CORE", id: "CASH_FLOW"}).then((res) => {
     console.log(res);
 });
+```
+
+Returns:
+
+```javascript
+[
+  {
+    capitalExpenditures: -2916000000,
+    cashChange: 55872000000,
+    cashFlow: 28560000000,
+    cashFlowFinancing: -25724000000,
+    changesInInventories: 7482000000,
+    changesInReceivables: 35899000000,
+    currency: 'USD',
+    depreciation: 2898000000,
+    dividendsPaid: null,
+    exchangeRateEffect: null,
+    filingType: '10-Q',
+    fiscalDate: '2023-04-01',
+    fiscalQuarter: 2,
+    fiscalYear: 2023,
+    investingActivityOther: null,
+    investments: null,
+    netBorrowings: 40083000000,
+    netIncome: 24160000000,
+    otherFinancingCashFlows: null,
+    reportDate: '2023-05-05',
+    symbol: 'AAPL',
+    totalInvestingCashFlows: 2319000000,
+    id: 'CASH_FLOW',
+    key: 'AAPL',
+    subkey: 'quarterly',
+    date: 1680307200000,
+    updated: 1686754897000
+  }
+]
 ```
 
 | **Note:** The [iex.js JavaScript Library](https://iexcloud.io/documentation/developer-tools/iexjs-library.html#initialize-a-client) overview demonstrates initializing an iex.js `Client` object.
@@ -101,17 +137,17 @@ client.apperate.queryData({key: "AAPL", workspace: "CORE", id: "CASH_FLOW"}).the
 
 ## write()
 
-Write data records and events (optional).
+Write data records and optionally publish them as events.
 
 ### Syntax
 
 ```javascript
-apperate.write(args)
+apperate.write(args: Object)
 ```
 
 ### Parameters
 
-For `args`, pass in an object that specifies the following **Required** parameters and any of the following non-default parameters.
+This method takes an arguments object that specifies the following **Required** parameters and any of the following non-default parameters.
 
 Parameter | Type | Description
 --------- | ---- | -----------
@@ -129,25 +165,25 @@ Parameter | Type | Description
 
 An object containing a `success` boolean and a `message` string.
 
-For example,
-
-```javascript
-{success: true, message: "wrote 2 messages"}
-```
-
 ### Examples
 
-> Example - Add a user record
+Example - Add a user record
 
 ```javascript
 client.apperate.write({
     workspace: "YOUR_WORKSPACE", 
-    id: "YOUR_DATASET_TO_CREATEß", 
+    id: "YOUR_DATASET_TO_CREATE", 
     createDatasetOnDemand: true, 
     data: [{"firstname": "Jasmine", "lastname": "Doe", "email": "jasmine.doe@foo.org", "org": "Foo LLC"}]})
         .then((res) => {
             console.log(res);
         });
+```
+
+Returns:
+
+```javascript
+{success: true, message: "wrote 1 messages"}
 ```
 
 | **Note:** The [iex.js JavaScript Library](https://iexcloud.io/documentation/developer-tools/iexjs-library.html#initialize-a-client) overview demonstrates initializing an iex.js `Client` object.

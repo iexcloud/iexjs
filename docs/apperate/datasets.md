@@ -2,7 +2,7 @@
 
 These JavaScript methods wrap Apperate [Datasets API](https://iexcloud.io/docs/apperate-apis/datasets) REST endpoints.
 
-Table of Contents:
+## Methods:
 
 - [getDataset()](#getdataset)
 - [listDatasets()](#listdatasets)
@@ -11,7 +11,7 @@ Table of Contents:
 
 ## getDataset()
 
-Returns the details of the given workspace dataset.
+Returns the specified workspace [Dataset](https://iexcloud.io/docs/apperate-apis/datasets/dataset-object) object.
 
 ### Syntax
 
@@ -21,7 +21,7 @@ apperate.getDataset(args: Object)
 
 ### Parameters
 
-For `args`, pass in an object that specifies the following parameters.
+This method takes an arguments object that specifies the following parameters.
 
 Parameter | Type | Description
 --------- | ---- | -----------
@@ -30,7 +30,7 @@ Parameter | Type | Description
 
 ### Returns
 
-Returns the dataset object, including its schema.
+Returns the specified workspace [Dataset](https://iexcloud.io/docs/apperate-apis/datasets/dataset-object) object.
 
 ### Examples
 
@@ -73,7 +73,7 @@ Returns:
 
 ### Additional Resources
 
-[Get a Dataset](https://iexcloud.io/docs/apperate-apis/datasets/get-a-dataset)
+[GET /datasets/:workspace/:id](https://iexcloud.io/docs/apperate-apis/datasets/get-a-dataset)
 
 [Create a Dataset with the API](https://iexcloud.io/documentation/managing-your-data/creating-a-dataset-with-the-api.html)
 
@@ -81,7 +81,7 @@ Returns:
 
 ## listDatasets()
 
-Returns the general information of all the given workspace's datasets.
+Returns an array of the workspace's [Dataset](https://iexcloud.io/docs/apperate-apis/datasets/dataset-object) objects.
 
 ### Syntax
 
@@ -91,7 +91,7 @@ apperate.listDatasets(args: Object)
 
 ### Parameters
 
-For `args`, pass in an object that specifies the `workspace` and any of the following optional parameters.
+This method takes an arguments object that specifies the `workspace` and any of the following optional parameters.
 
 Parameter | Type | Description
 --------- | ---- | -----------
@@ -100,11 +100,19 @@ Parameter | Type | Description
 
 ### Returns
 
-An array of general workspace dataset information.
+An array of the workspace's [Dataset](https://iexcloud.io/docs/apperate-apis/datasets/dataset-object) objects.
 
 ### Examples
 
-> Example - todo
+Example - List workspace datasets:
+
+```javascript
+client.apperate.listDatasets({workspace: "JHINKEYPROD"}).then((res) => {
+    console.log(res);
+});
+```
+
+Returns:
 
 ```javascript
 [
@@ -138,6 +146,6 @@ An array of general workspace dataset information.
 
 ### Additional Resources
 
-[List Datasets](https://iexcloud.io/docs/apperate-apis/datasets/list-datasets)
+[GET /datasets/:workspace](https://iexcloud.io/docs/apperate-apis/datasets/list-datasets)
 
 [Create a Dataset with the API](https://iexcloud.io/documentation/managing-your-data/creating-a-dataset-with-the-api.html)
