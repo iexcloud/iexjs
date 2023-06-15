@@ -2,7 +2,7 @@
 
 These JavaScript methods wrap Apperate [Data API](https://iexcloud.io/docs/apperate-apis/data) REST endpoints.
 
-## Table of Contents
+## Methods:
 
 - [queryData()](#querydata)
 - [write()](#write)

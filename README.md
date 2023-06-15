@@ -48,11 +48,11 @@ client.apperate.queryData({key: "AAPL", workspace: "CORE", id: "CASH_FLOW"}).the
 });
 ```
 
-The `apperate` methods wrap calls to [Apperate APIs](https://iexcloud.io/docs/apperate-apis/), including the [Data API](https://iexcloud.io/docs/apperate-apis/data/). The `queryData` method retrieves data from the dataset specified by the `id` parameter. You can retrieve data from any dataset you have access to, including `CORE` datasets.
+The `apperate` methods wrap calls to [Apperate APIs](https://iexcloud.io/docs/apperate-apis/), including the [Data API](https://iexcloud.io/docs/apperate-apis/data/), [Datasets API](https://iexcloud.io/docs/apperate-apis/datasets/), and more. The `queryData` method retrieves data from the dataset specified by the `id` parameter. You can retrieve data from any dataset you have access to, including `CORE` datasets.
 
-> [Querying Datasets with iex.js](https://iexcloud.io/documentation/interacting-with-your-data/querying-data/querying-datasets-with-iexjs.html) provides details on searching datasets.
+> [Querying Datasets with iexjs](https://iexcloud.io/documentation/interacting-with-your-data/querying-data/querying-datasets-with-iexjs.html) provides details on searching datasets.
 
-> The [iex.js apperate module documentation](./docs/iexjs_apperate.md) describes methods that operate on [Apperate](https://iexcloud.io/documentation/getting-started/what-is-iex-cloud-apperate.html) data, datasets, metadata, and more.
+> The [iexjs Apperate documentation](./docs/apperate/iexjs-apperate.md) describes methods that use the client's `Apperate` class to operate on [Apperate](https://iexcloud.io/documentation/getting-started/what-is-iex-cloud-apperate.html) resources including data, datasets, metadata, and more.
 
 ## IEX Cloud Legacy Examples
 
