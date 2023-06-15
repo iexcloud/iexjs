@@ -2,7 +2,7 @@
 
 These JavaScript methods wrap Apperate [Data API](https://iexcloud.io/docs/apperate-apis/data) REST endpoints.
 
-Table of Contents:
+## Table of Contents
 
 - [queryData()](#querydata)
 - [write()](#write)
@@ -16,7 +16,7 @@ Query data from the given dataset. For time series data, you can time-window the
 ### Syntax
 
 ```javascript
-apperate.queryData(args)
+apperate.queryData(args: Object)
 ```
 
 ### Parameters
@@ -137,12 +137,12 @@ Returns:
 
 ## write()
 
-Write data records and events (optional).
+Write data records and optionally publish them as events.
 
 ### Syntax
 
 ```javascript
-apperate.write(args)
+apperate.write(args: Object)
 ```
 
 ### Parameters

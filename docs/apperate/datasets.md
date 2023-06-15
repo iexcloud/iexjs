@@ -2,7 +2,7 @@
 
 These JavaScript methods wrap Apperate [Datasets API](https://iexcloud.io/docs/apperate-apis/datasets) REST endpoints.
 
-Table of Contents:
+## Table of Contents
 
 - [getDataset()](#getdataset)
 - [listDatasets()](#listdatasets)
@@ -11,7 +11,7 @@ Table of Contents:
 
 ## getDataset()
 
-Returns the details of the given workspace dataset.
+Returns the specified workspace [Dataset](https://iexcloud.io/docs/apperate-apis/datasets/dataset-object) object.
 
 ### Syntax
 
@@ -30,7 +30,7 @@ Parameter | Type | Description
 
 ### Returns
 
-Returns the dataset object, including its schema.
+Returns the specified workspace [Dataset](https://iexcloud.io/docs/apperate-apis/datasets/dataset-object) object.
 
 ### Examples
 
@@ -81,7 +81,7 @@ Returns:
 
 ## listDatasets()
 
-Returns the general information of all the given workspace's datasets.
+Returns an array of the workspace's [Dataset](https://iexcloud.io/docs/apperate-apis/datasets/dataset-object) objects.
 
 ### Syntax
 
@@ -100,7 +100,7 @@ Parameter | Type | Description
 
 ### Returns
 
-An array of general workspace dataset information.
+An array of the workspace's [Dataset](https://iexcloud.io/docs/apperate-apis/datasets/dataset-object) objects.
 
 ### Examples
 
