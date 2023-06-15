@@ -4,8 +4,8 @@ These JavaScript methods wrap Apperate [Data API](https://iexcloud.io/docs/apper
 
 Table of Contents:
 
-- [queryData()](#apperatequerydata)
-- [write()](#apperatewrite)
+- [queryData()](#querydata)
+- [write()](#write)
 
 ---
 
