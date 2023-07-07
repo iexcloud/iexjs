@@ -4,7 +4,7 @@ Operate on Apperate resources including data, datasets, data sources, rules, and
 
 Click any of the Apperate resources below to explore methods that operate on them.
 
-- [Data](./data.md)
-- [Datasets](./datasets.md)
+- [Data](./apperate-iexjs/data.md)
+- [Datasets](./apperate-iexjs/datasets.md)
 
 | Note: more Apperate iexjs docs are coming soon!
