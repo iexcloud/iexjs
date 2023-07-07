@@ -4,8 +4,8 @@ These JavaScript methods wrap Apperate [Datasets API](https://iexcloud.io/docs/a
 
 ## Methods:
 
-- [getDataset()](#getdataset)
-- [listDatasets()](#listdatasets)
+- getDataset()
+- listDatasets()
 
 ---
 
