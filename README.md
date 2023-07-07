@@ -52,7 +52,7 @@ The `apperate` methods wrap calls to [Apperate APIs](https://iexcloud.io/docs/ap
 
 > [Querying Datasets with iexjs](https://iexcloud.io/documentation/interacting-with-your-data/querying-data/querying-datasets-with-iexjs.html) provides details on searching datasets.
 
-> The [iexjs Apperate documentation](./docs/apperate/iexjs-apperate.md) describes methods that use the client's `Apperate` class to operate on [Apperate](https://iexcloud.io/documentation/getting-started/what-is-iex-cloud-apperate.html) resources including data, datasets, metadata, and more.
+> The [Apperate iexjs documentation](./docs/apperate/apperate-iexjs.md) describes methods that use the client's `Apperate` class to operate on [Apperate](https://iexcloud.io/documentation/getting-started/what-is-iex-cloud-apperate.html) resources including data, datasets, metadata, and more.
 
 ## IEX Cloud Legacy Examples
 
