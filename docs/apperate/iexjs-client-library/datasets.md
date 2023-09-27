@@ -1,6 +1,6 @@
 # Datasets
 
-These JavaScript methods wrap Apperate [Datasets API](https://iexcloud.io/docs/apperate-apis/datasets) REST endpoints.
+These JavaScript methods wrap Apperate Platform dataset REST endpoints.
 
 ## Methods:
 
