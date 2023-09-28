@@ -1,6 +1,6 @@
 # Data
 
-These JavaScript methods wrap Apperate [Data API](https://iexcloud.io/docs/apperate-apis/data) REST endpoints.
+These JavaScript methods wrap IEX Cloud Data REST endpoints.
 
 ## Methods:
 
